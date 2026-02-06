@@ -258,7 +258,11 @@
   "settings": {
     "executionOrder": "v1",
     "binaryMode": "separate",
-    "availableInMCP": false
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "errorWorkflow": "l6cTBPD1mo-Amcj4rShqQ",
+    "callerPolicy": "workflowsFromSameOwner",
+    "timezone": "America/Los_Angeles"
   },
   "shared": [
     {
@@ -272,6 +276,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-02-06T03:28:49.759Z",
+  "updatedAt": "2026-02-06T03:58:39.317Z",
   "versionId": "ec633a2b-0929-44ce-a112-a407fd85dd0d"
 }
