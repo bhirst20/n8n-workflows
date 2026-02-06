@@ -1,0 +1,277 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-02-05T21:03:51.000Z",
+    "createdAt": "2026-02-05T06:37:00.082Z",
+    "versionId": "38102ee2-4754-48dc-8e36-e2446d90d9ae",
+    "workflowId": "J_PBKwfrkFmoZUzbivBzh",
+    "nodes": [
+      {
+        "parameters": {
+          "updates": [
+            "message"
+          ],
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.telegramTrigger",
+        "typeVersion": 1.2,
+        "position": [
+          -384,
+          -64
+        ],
+        "id": "e3b7594b-a498-42ba-9fc6-f97b58200625",
+        "name": "Telegram Trigger",
+        "webhookId": "6b016f2b-4432-4750-815d-46a2e5d0c956",
+        "credentials": {
+          "telegramApi": {
+            "id": "RICZVhd35IuBZYc6",
+            "name": "Telegram hjedibot"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "mode": "raw",
+          "jsonOutput": "={\n  \"session_id\": \"11f422de-33a1-4729-a3eb-6feac2547546\"\n  \"chatInput\": \"{{ $json.message.text }}\",\n  \"currentdate\": \"{{ $now.toFormat('yyyy-MM-dd') }}\"\n}\n ",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -160,
+          -64
+        ],
+        "id": "dfd109ec-5eae-4247-92c6-5dcedc7afc72",
+        "name": "InjectMessageID"
+      },
+      {
+        "parameters": {
+          "authentication": "privateKey",
+          "command": "=PATH=$PATH:/home/secbot/.local/bin/; claude -r  {{ $json.session_id }} -p --permission-mode acceptEdits \"You have my permission to read and write to anything in ~/bvault/. Do the following: {{ $json.chatInput }}\" For reference, today is {{ $json.currentdate }}",
+          "cwd": "/home/secbot"
+        },
+        "type": "n8n-nodes-base.ssh",
+        "typeVersion": 1,
+        "position": [
+          64,
+          -64
+        ],
+        "id": "0a4be7de-49e9-4526-a9cd-657f5c36cf53",
+        "name": "Send to Claude",
+        "credentials": {
+          "sshPrivateKey": {
+            "id": "zMpYEN80B0t1Q58t",
+            "name": "SSH Private Key account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "chatId": "8526724892",
+          "text": "=Update from Claude Code: {{ $json.stdout }}",
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1.2,
+        "position": [
+          288,
+          -64
+        ],
+        "id": "9a8b891c-de58-4128-9fb9-fe93f83388aa",
+        "name": "Sent Claude Output",
+        "webhookId": "93fa7d5b-5323-423a-a166-cdb8b8eae6f4",
+        "credentials": {
+          "telegramApi": {
+            "id": "RICZVhd35IuBZYc6",
+            "name": "Telegram hjedibot"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Telegram Trigger": {
+        "main": [
+          [
+            {
+              "node": "InjectMessageID",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "InjectMessageID": {
+        "main": [
+          [
+            {
+              "node": "Send to Claude",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Send to Claude": {
+        "main": [
+          [
+            {
+              "node": "Sent Claude Output",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Brian Hirst",
+    "name": "Version 38102ee2",
+    "description": "",
+    "autosaved": true
+  },
+  "activeVersionId": "38102ee2-4754-48dc-8e36-e2446d90d9ae",
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "InjectMessageID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "InjectMessageID": {
+      "main": [
+        [
+          {
+            "node": "Send to Claude",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send to Claude": {
+      "main": [
+        [
+          {
+            "node": "Sent Claude Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-02-05T06:12:07.224Z",
+  "id": "J_PBKwfrkFmoZUzbivBzh",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "BVault - Chat Integration",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -384,
+        -64
+      ],
+      "id": "e3b7594b-a498-42ba-9fc6-f97b58200625",
+      "name": "Telegram Trigger",
+      "webhookId": "6b016f2b-4432-4750-815d-46a2e5d0c956",
+      "credentials": {
+        "telegramApi": {
+          "id": "RICZVhd35IuBZYc6",
+          "name": "Telegram hjedibot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"session_id\": \"11f422de-33a1-4729-a3eb-6feac2547546\"\n  \"chatInput\": \"{{ $json.message.text }}\",\n  \"currentdate\": \"{{ $now.toFormat('yyyy-MM-dd') }}\"\n}\n ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -160,
+        -64
+      ],
+      "id": "dfd109ec-5eae-4247-92c6-5dcedc7afc72",
+      "name": "InjectMessageID"
+    },
+    {
+      "parameters": {
+        "authentication": "privateKey",
+        "command": "=PATH=$PATH:/home/secbot/.local/bin/; claude -r  {{ $json.session_id }} -p --permission-mode acceptEdits \"You have my permission to read and write to anything in ~/bvault/. Do the following: {{ $json.chatInput }}\" For reference, today is {{ $json.currentdate }}",
+        "cwd": "/home/secbot"
+      },
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        64,
+        -64
+      ],
+      "id": "0a4be7de-49e9-4526-a9cd-657f5c36cf53",
+      "name": "Send to Claude",
+      "credentials": {
+        "sshPrivateKey": {
+          "id": "zMpYEN80B0t1Q58t",
+          "name": "SSH Osgiliath"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "8526724892",
+        "text": "=Update from Claude Code: {{ $json.stdout }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        288,
+        -64
+      ],
+      "id": "9a8b891c-de58-4128-9fb9-fe93f83388aa",
+      "name": "Sent Claude Output",
+      "webhookId": "93fa7d5b-5323-423a-a166-cdb8b8eae6f4",
+      "credentials": {
+        "telegramApi": {
+          "id": "RICZVhd35IuBZYc6",
+          "name": "Telegram hjedibot"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-02-05T06:12:07.231Z",
+      "createdAt": "2026-02-05T06:12:07.231Z",
+      "role": "workflow:owner",
+      "workflowId": "J_PBKwfrkFmoZUzbivBzh",
+      "projectId": "Qi7hejIuuHn0WOEG"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-02-06T03:28:49.759Z",
+  "versionId": "ec633a2b-0929-44ce-a112-a407fd85dd0d"
+}
