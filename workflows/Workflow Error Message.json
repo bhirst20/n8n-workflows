@@ -1,0 +1,127 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-02-06T03:57:42.000Z",
+    "createdAt": "2026-02-06T03:57:41.108Z",
+    "versionId": "e1541f57-734b-4680-95ec-eb70c3d9269d",
+    "workflowId": "l6cTBPD1mo-Amcj4rShqQ",
+    "nodes": [
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://ntfy.sh/svjgQ5oxGZJoizCu",
+          "sendBody": true,
+          "contentType": "raw",
+          "body": "=There is an error one of the n8n workflows:\n\nName:\n{{ $json.workflow.name }}\n\nMessage:\n{{ $json.execution.error.message }}\n\nURL:\n{{ $json.execution.url }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          176,
+          0
+        ],
+        "id": "1183e344-4e55-43f7-b9e1-e6ff53b2f20a",
+        "name": "HTTP Request"
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.errorTrigger",
+        "typeVersion": 1,
+        "position": [
+          -112,
+          0
+        ],
+        "id": "db9904d2-abad-4e02-ae44-e14ea62772d3",
+        "name": "Error Trigger"
+      }
+    ],
+    "connections": {
+      "Error Trigger": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Brian Hirst",
+    "name": "Version e1541f57",
+    "description": "",
+    "autosaved": false
+  },
+  "activeVersionId": "e1541f57-734b-4680-95ec-eb70c3d9269d",
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-02-06T03:53:55.765Z",
+  "id": "l6cTBPD1mo-Amcj4rShqQ",
+  "isArchived": false,
+  "meta": null,
+  "name": "Workflow Error Message",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://ntfy.sh/svjgQ5oxGZJoizCu",
+        "sendBody": true,
+        "contentType": "raw",
+        "body": "=There is an error one of the n8n workflows:\n\nName:\n{{ $json.workflow.name }}\n\nMessage:\n{{ $json.execution.error.message }}\n\nURL:\n{{ $json.execution.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        176,
+        0
+      ],
+      "id": "1183e344-4e55-43f7-b9e1-e6ff53b2f20a",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        -112,
+        0
+      ],
+      "id": "db9904d2-abad-4e02-ae44-e14ea62772d3",
+      "name": "Error Trigger"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-02-06T03:53:55.767Z",
+      "createdAt": "2026-02-06T03:53:55.767Z",
+      "role": "workflow:owner",
+      "workflowId": "l6cTBPD1mo-Amcj4rShqQ",
+      "projectId": "Qi7hejIuuHn0WOEG"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-02-06T03:57:41.106Z",
+  "versionId": "e1541f57-734b-4680-95ec-eb70c3d9269d"
+}
