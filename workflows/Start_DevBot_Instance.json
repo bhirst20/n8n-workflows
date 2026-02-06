@@ -1,0 +1,114 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Start Instance": {
+      "main": [
+        [
+          {
+            "node": "Message NTFY",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Start Instance",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-02-06T04:09:24.004Z",
+  "id": "5uL0QWoeyyhpv9hclQFbs",
+  "isArchived": false,
+  "meta": null,
+  "name": "Start_DevBot_Instance",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://w7ktsotuhu6khkybbi673rywtq0mzjth.lambda-url.us-east-2.on.aws/",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "instance_id",
+              "value": "i-0541a05a0f2b48056"
+            },
+            {
+              "name": "token",
+              "value": "cXO7MjPUrt2z5sGtlZIHVvKya62Z9diuCIWYhpowR2hbsH312ELYdSzluyS7gdYqcXO7MjPUrt2z5sGtlZIHVvKya62Z9diuCIWYhpowR2hbsH312ELYdSzluyS7gdYqcXO7MjPUrt2z5sGtlZIHVvKya62Z9diuCIWYhpowR2hbsH312ELYdSzluyS7gdYq"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        224,
+        0
+      ],
+      "id": "06ab726f-823d-416a-9cd5-1999c9efe462",
+      "name": "Start Instance"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://ntfy.sh/svjgQ5oxGZJoizCu",
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "text/html",
+        "body": "DevBot instance has been started",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        448,
+        0
+      ],
+      "id": "236d8fb0-c5c5-4855-aa50-cf59cea3b31f",
+      "name": "Message NTFY"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "b35bddec-f974-4d14-8c86-d720dec8a43f",
+      "name": "When clicking ‘Execute workflow’"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-02-06T04:09:24.008Z",
+      "createdAt": "2026-02-06T04:09:24.008Z",
+      "role": "workflow:owner",
+      "workflowId": "5uL0QWoeyyhpv9hclQFbs",
+      "projectId": "Qi7hejIuuHn0WOEG"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-02-06T04:09:54.625Z",
+  "versionId": "b7658185-f0e3-4e32-babe-6bfdd1ec8e44"
+}
