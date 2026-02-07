@@ -1,89 +1,789 @@
 {
-  "active": false,
-  "activeVersion": null,
-  "activeVersionId": null,
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-02-06T16:01:43.000Z",
+    "createdAt": "2026-02-06T16:00:25.498Z",
+    "versionId": "b7f2964f-fa5e-4b65-ae16-4cbfb8c3ae1e",
+    "workflowId": "YuD9BhsP00t3G4beARlSc",
+    "nodes": [
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "hours",
+                "triggerAtMinute": 5
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.3,
+        "position": [
+          -480,
+          400
+        ],
+        "id": "7d8cb5dd-bf28-4bed-a561-ae23190ffb9f",
+        "name": "Schedule Trigger"
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "SELECT pid, usename, client_addr, query, state, query_start FROM pg_stat_activity;",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.6,
+        "position": [
+          144,
+          80
+        ],
+        "id": "b31ceb78-d477-46e1-bc14-09ecac96cd9d",
+        "name": "Execute a SQL query1",
+        "alwaysOutputData": true,
+        "credentials": {
+          "postgres": {
+            "id": "qjHeIcE6R6RM233i",
+            "name": "psql - db"
+          }
+        },
+        "onError": "continueErrorOutput"
+      },
+      {
+        "parameters": {
+          "url": "https://it.hjedi.net/",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          144,
+          -80
+        ],
+        "id": "65d84664-734a-4a7b-b2a9-cc451e10d47b",
+        "name": "Check IT Tools",
+        "onError": "continueErrorOutput"
+      },
+      {
+        "parameters": {
+          "numberInputs": 7
+        },
+        "type": "n8n-nodes-base.merge",
+        "typeVersion": 3.2,
+        "position": [
+          1216,
+          320
+        ],
+        "id": "bb2d5992-b578-48b0-85d7-023aad771e89",
+        "name": "Merge"
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "n8n-nodes-base.splitInBatches",
+        "typeVersion": 3,
+        "position": [
+          1424,
+          400
+        ],
+        "id": "7f10e04c-c40b-4933-9ce9-57345b7dc4af",
+        "name": "Loop Over Items"
+      },
+      {
+        "parameters": {
+          "mode": "raw",
+          "jsonOutput": "={\n  \"service\": \"Piwingo\",\n  \"url\": \"https://fambam.hjedi.net/\"\n}\n ",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -32,
+          400
+        ],
+        "id": "fd8f7c7c-719f-4e7d-b4b9-2a90a3b182e8",
+        "name": "Piwingo Fields"
+      },
+      {
+        "parameters": {
+          "operation": "executeQuery",
+          "query": "show processlist",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.mySql",
+        "typeVersion": 2.5,
+        "position": [
+          144,
+          240
+        ],
+        "id": "42b14714-b762-4827-a61d-1af391f2d34a",
+        "name": "MySQL Check",
+        "alwaysOutputData": true,
+        "credentials": {
+          "mySql": {
+            "id": "pcLTgEIQCTLbAfQO",
+            "name": "db-mariadb"
+          }
+        },
+        "onError": "continueErrorOutput"
+      },
+      {
+        "parameters": {
+          "url": "https://fambam.hjedi.net/",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.3,
+        "position": [
+          144,
+          400
+        ],
+        "id": "7ccec2dd-b6c3-4aff-8e94-97331369937a",
+        "name": "Piwingo Check",
+        "alwaysOutputData": false,
+        "notesInFlow": true,
+        "onError": "continueErrorOutput"
+      },
+      {
+        "parameters": {
+          "mode": "raw",
+          "jsonOutput": "={\n  \"service\": \"MySQL\",\n  \"url\": \"db.hjedi.net\"\n}\n ",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -32,
+          240
+        ],
+        "id": "31a87237-dba2-40da-8633-069d1fb4274e",
+        "name": "MySQL Fields"
+      },
+      {
+        "parameters": {
+          "mode": "raw",
+          "jsonOutput": "={\n  \"service\": \"PostgreSQL\",\n  \"url\": \"db.hjedi.net\"\n}\n ",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -32,
+          80
+        ],
+        "id": "7c2075d7-c537-4587-8b13-07335957d7c4",
+        "name": "PSQL Fields"
+      },
+      {
+        "parameters": {
+          "mode": "raw",
+          "jsonOutput": "={\n  \"service\": \"IT Tools\",\n  \"url\": \"https://it.hjedi.net/\"\n}\n ",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -32,
+          -80
+        ],
+        "id": "01ba3685-8021-4c0b-94ee-8f6a62ebaba7",
+        "name": "IT Tools Fields"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://ntfy.sh/svjgQ5oxGZJoizCu",
+          "sendBody": true,
+          "contentType": "raw",
+          "rawContentType": "text/html",
+          "body": "=Health check did't pass for: {{ $json.service }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.3,
+        "position": [
+          1728,
+          416
+        ],
+        "id": "5add9e96-984c-445d-b0b4-6c3188c43a61",
+        "name": "NTFY Notification"
+      },
+      {
+        "parameters": {
+          "mode": "raw",
+          "jsonOutput": "={\n  \"service\": \"Redis\",\n  \"url\": \"db.hjedi.net\"\n}\n ",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -32,
+          560
+        ],
+        "id": "9485cc2f-3b42-4f6b-8db3-e66f341fb53a",
+        "name": "Redis Fields"
+      },
+      {
+        "parameters": {
+          "mode": "raw",
+          "jsonOutput": "={\n  \"service\": \"Registry\",\n  \"url\": \"registry.hjedi.net\"\n}\n ",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -32,
+          720
+        ],
+        "id": "70bf4f14-87ea-4c70-9771-c5c92a03ceac",
+        "name": "Registry Data"
+      },
+      {
+        "parameters": {
+          "url": "https://registry.hjedi.net",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.3,
+        "position": [
+          144,
+          720
+        ],
+        "id": "498a3f18-fef3-477d-9053-2d8454d74ff8",
+        "name": "Registry Check",
+        "alwaysOutputData": false,
+        "notesInFlow": false,
+        "onError": "continueErrorOutput"
+      },
+      {
+        "parameters": {
+          "url": "https://registryui.hjedi.net",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.3,
+        "position": [
+          144,
+          896
+        ],
+        "id": "01ed72ec-d016-48de-9326-9ef1d3847790",
+        "name": "RegistryUI Check",
+        "alwaysOutputData": false,
+        "notesInFlow": false,
+        "onError": "continueErrorOutput"
+      },
+      {
+        "parameters": {
+          "mode": "raw",
+          "jsonOutput": "={\n  \"service\": \"RegistryUI\",\n  \"url\": \"registryui.hjedi.net\"\n}\n ",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.set",
+        "typeVersion": 3.4,
+        "position": [
+          -32,
+          896
+        ],
+        "id": "7420063d-b754-4cc9-8807-8b07fe9d14b2",
+        "name": "RegistryUI Data"
+      },
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.redis",
+        "typeVersion": 1,
+        "position": [
+          144,
+          560
+        ],
+        "id": "d9d26af9-e046-4115-a58f-761eb982c5af",
+        "name": "Redis Check",
+        "credentials": {
+          "redis": {
+            "id": "qieaTt0bFVo3WgGZ",
+            "name": "Redis account"
+          }
+        },
+        "onError": "continueErrorOutput"
+      }
+    ],
+    "connections": {
+      "Schedule Trigger": {
+        "main": [
+          [
+            {
+              "node": "Piwingo Fields",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "MySQL Fields",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "PSQL Fields",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "IT Tools Fields",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Redis Fields",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "Registry Data",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "RegistryUI Data",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Execute a SQL query1": {
+        "main": [
+          [],
+          [
+            {
+              "node": "Merge",
+              "type": "main",
+              "index": 1
+            }
+          ]
+        ]
+      },
+      "Check IT Tools": {
+        "main": [
+          [],
+          [
+            {
+              "node": "Merge",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Merge": {
+        "main": [
+          [
+            {
+              "node": "Loop Over Items",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Loop Over Items": {
+        "main": [
+          [],
+          [
+            {
+              "node": "NTFY Notification",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Piwingo Fields": {
+        "main": [
+          [
+            {
+              "node": "Piwingo Check",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "MySQL Check": {
+        "main": [
+          [],
+          [
+            {
+              "node": "Merge",
+              "type": "main",
+              "index": 2
+            }
+          ]
+        ]
+      },
+      "Piwingo Check": {
+        "main": [
+          [],
+          [
+            {
+              "node": "Merge",
+              "type": "main",
+              "index": 3
+            }
+          ]
+        ]
+      },
+      "MySQL Fields": {
+        "main": [
+          [
+            {
+              "node": "MySQL Check",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "PSQL Fields": {
+        "main": [
+          [
+            {
+              "node": "Execute a SQL query1",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "IT Tools Fields": {
+        "main": [
+          [
+            {
+              "node": "Check IT Tools",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "NTFY Notification": {
+        "main": [
+          [
+            {
+              "node": "Loop Over Items",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Redis Fields": {
+        "main": [
+          [
+            {
+              "node": "Redis Check",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Registry Data": {
+        "main": [
+          [
+            {
+              "node": "Registry Check",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Registry Check": {
+        "main": [
+          [],
+          [
+            {
+              "node": "Merge",
+              "type": "main",
+              "index": 5
+            }
+          ]
+        ]
+      },
+      "RegistryUI Data": {
+        "main": [
+          [
+            {
+              "node": "RegistryUI Check",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "RegistryUI Check": {
+        "main": [
+          [],
+          [
+            {
+              "node": "Merge",
+              "type": "main",
+              "index": 6
+            }
+          ]
+        ]
+      },
+      "Redis Check": {
+        "main": [
+          [],
+          [
+            {
+              "node": "Merge",
+              "type": "main",
+              "index": 4
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Brian Hirst",
+    "name": "Version b7f2964f",
+    "description": "",
+    "autosaved": true
+  },
+  "activeVersionId": "b7f2964f-fa5e-4b65-ae16-4cbfb8c3ae1e",
   "connections": {
     "Schedule Trigger": {
       "main": [
         [
           {
-            "node": "Execute a SQL query",
+            "node": "Piwingo Fields",
             "type": "main",
             "index": 0
           },
           {
-            "node": "Check Piwingo",
+            "node": "MySQL Fields",
             "type": "main",
             "index": 0
-          }
-        ]
-      ]
-    },
-    "Select rows from a table": {
-      "main": [
-        [
+          },
           {
-            "node": "If",
+            "node": "PSQL Fields",
             "type": "main",
             "index": 0
-          }
-        ]
-      ]
-    },
-    "Execute a SQL query": {
-      "main": [
-        [
+          },
           {
-            "node": "Check Connection",
+            "node": "IT Tools Fields",
             "type": "main",
             "index": 0
-          }
-        ]
-      ]
-    },
-    "Check Connection": {
-      "main": [
-        [],
-        [
+          },
           {
-            "node": "NTFY - MariaDB",
+            "node": "Redis Fields",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Registry Data",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "RegistryUI Data",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "If": {
+    "Execute a SQL query1": {
       "main": [
         [],
         [
           {
-            "node": "NTFY - PSQL",
+            "node": "Merge",
             "type": "main",
-            "index": 0
+            "index": 1
           }
         ]
       ]
     },
-    "Check Piwingo": {
-      "main": [
-        [
-          {
-            "node": "Check Connection - Piwingo",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Check Connection - Piwingo": {
+    "Check IT Tools": {
       "main": [
         [],
         [
           {
-            "node": "NTFY - Piwingo",
+            "node": "Merge",
             "type": "main",
             "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "NTFY Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Piwingo Fields": {
+      "main": [
+        [
+          {
+            "node": "Piwingo Check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MySQL Check": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Piwingo Check": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "MySQL Fields": {
+      "main": [
+        [
+          {
+            "node": "MySQL Check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PSQL Fields": {
+      "main": [
+        [
+          {
+            "node": "Execute a SQL query1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IT Tools Fields": {
+      "main": [
+        [
+          {
+            "node": "Check IT Tools",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NTFY Notification": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redis Fields": {
+      "main": [
+        [
+          {
+            "node": "Redis Check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Registry Data": {
+      "main": [
+        [
+          {
+            "node": "Registry Check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Registry Check": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 5
+          }
+        ]
+      ]
+    },
+    "RegistryUI Data": {
+      "main": [
+        [
+          {
+            "node": "RegistryUI Check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RegistryUI Check": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 6
+          }
+        ]
+      ]
+    },
+    "Redis Check": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 4
           }
         ]
       ]
@@ -92,50 +792,109 @@
   "createdAt": "2026-02-06T04:09:11.521Z",
   "id": "YuD9BhsP00t3G4beARlSc",
   "isArchived": false,
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "name": "Checking Docker Services",
   "nodes": [
     {
       "parameters": {
         "rule": {
           "interval": [
-            {}
+            {
+              "field": "hours",
+              "triggerAtMinute": 5
+            }
           ]
         }
       },
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.3,
       "position": [
-        -208,
-        128
+        -480,
+        400
       ],
       "id": "7d8cb5dd-bf28-4bed-a561-ae23190ffb9f",
       "name": "Schedule Trigger"
     },
     {
       "parameters": {
-        "operation": "select",
-        "schema": {
-          "__rl": true,
-          "mode": "list",
-          "value": "public"
-        },
-        "table": {
-          "__rl": true,
-          "mode": "list",
-          "value": ""
-        }
+        "operation": "executeQuery",
+        "query": "SELECT pid, usename, client_addr, query, state, query_start FROM pg_stat_activity;",
+        "options": {}
       },
       "type": "n8n-nodes-base.postgres",
       "typeVersion": 2.6,
       "position": [
-        0,
-        0
+        144,
+        80
       ],
       "id": "b31ceb78-d477-46e1-bc14-09ecac96cd9d",
-      "name": "Select rows from a table",
+      "name": "Execute a SQL query1",
       "alwaysOutputData": true,
-      "onError": "continueRegularOutput"
+      "credentials": {
+        "postgres": {
+          "id": "qjHeIcE6R6RM233i",
+          "name": "psql - db"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://it.hjedi.net/",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        144,
+        -80
+      ],
+      "id": "65d84664-734a-4a7b-b2a9-cc451e10d47b",
+      "name": "Check IT Tools",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "numberInputs": 7
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1216,
+        320
+      ],
+      "id": "bb2d5992-b578-48b0-85d7-023aad771e89",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1424,
+        400
+      ],
+      "id": "7f10e04c-c40b-4933-9ce9-57345b7dc4af",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"service\": \"Piwingo\",\n  \"url\": \"https://fambam.hjedi.net/\"\n}\n ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -32,
+        400
+      ],
+      "id": "fd8f7c7c-719f-4e7d-b4b9-2a90a3b182e8",
+      "name": "Piwingo Fields"
     },
     {
       "parameters": {
@@ -146,119 +905,19 @@
       "type": "n8n-nodes-base.mySql",
       "typeVersion": 2.5,
       "position": [
-        0,
-        320
+        144,
+        240
       ],
       "id": "42b14714-b762-4827-a61d-1af391f2d34a",
-      "name": "Execute a SQL query",
+      "name": "MySQL Check",
       "alwaysOutputData": true,
-      "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 3
-          },
-          "conditions": [
-            {
-              "id": "163d8749-4ab6-4819-8677-35ac74d3305d",
-              "leftValue": "",
-              "rightValue": "",
-              "operator": {
-                "type": "string",
-                "operation": "equals",
-                "name": "filter.operator.equals"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
+      "credentials": {
+        "mySql": {
+          "id": "pcLTgEIQCTLbAfQO",
+          "name": "db-mariadb"
+        }
       },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.3,
-      "position": [
-        176,
-        0
-      ],
-      "id": "74881fdf-1416-4a26-9bd5-97d186063973",
-      "name": "If"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 3
-          },
-          "conditions": [
-            {
-              "id": "163d8749-4ab6-4819-8677-35ac74d3305d",
-              "leftValue": "={{ $json.Tables_in_mysql }}",
-              "rightValue": "",
-              "operator": {
-                "type": "string",
-                "operation": "notEmpty",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.3,
-      "position": [
-        192,
-        320
-      ],
-      "id": "abfd40f2-f8ef-460f-ad57-c5cd78875b54",
-      "name": "Check Connection"
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "https://ntfy.sh/svjgQ5oxGZJoizCu",
-        "sendBody": true,
-        "contentType": "raw",
-        "rawContentType": "text/html",
-        "body": "Maria DB is not operational, affected services: Piwingo Server",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.3,
-      "position": [
-        416,
-        16
-      ],
-      "id": "c04bca26-c4b2-4ec0-a908-76a24cd7a484",
-      "name": "NTFY - PSQL"
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "https://ntfy.sh/svjgQ5oxGZJoizCu",
-        "sendBody": true,
-        "contentType": "raw",
-        "rawContentType": "text/html",
-        "body": "Maria DB is not operational, affected services: Piwingo Server",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.3,
-      "position": [
-        416,
-        336
-      ],
-      "id": "5add9e96-984c-445d-b0b4-6c3188c43a61",
-      "name": "NTFY - MariaDB"
+      "onError": "continueErrorOutput"
     },
     {
       "parameters": {
@@ -268,13 +927,59 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        0,
-        512
+        144,
+        400
       ],
       "id": "7ccec2dd-b6c3-4aff-8e94-97331369937a",
-      "name": "Check Piwingo",
-      "alwaysOutputData": true,
-      "onError": "continueRegularOutput"
+      "name": "Piwingo Check",
+      "alwaysOutputData": false,
+      "notesInFlow": true,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"service\": \"MySQL\",\n  \"url\": \"db.hjedi.net\"\n}\n ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -32,
+        240
+      ],
+      "id": "31a87237-dba2-40da-8633-069d1fb4274e",
+      "name": "MySQL Fields"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"service\": \"PostgreSQL\",\n  \"url\": \"db.hjedi.net\"\n}\n ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -32,
+        80
+      ],
+      "id": "7c2075d7-c537-4587-8b13-07335957d7c4",
+      "name": "PSQL Fields"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"service\": \"IT Tools\",\n  \"url\": \"https://it.hjedi.net/\"\n}\n ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -32,
+        -80
+      ],
+      "id": "01ba3685-8021-4c0b-94ee-8f6a62ebaba7",
+      "name": "IT Tools Fields"
     },
     {
       "parameters": {
@@ -283,60 +988,130 @@
         "sendBody": true,
         "contentType": "raw",
         "rawContentType": "text/html",
-        "body": "Piwingo is not operational",
+        "body": "=Health check did't pass for: {{ $json.service }}",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        416,
-        528
+        1728,
+        416
       ],
-      "id": "5ac399bb-ef0f-422a-a49e-e494ad44eefd",
-      "name": "NTFY - Piwingo"
+      "id": "5add9e96-984c-445d-b0b4-6c3188c43a61",
+      "name": "NTFY Notification"
     },
     {
       "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 3
-          },
-          "conditions": [
-            {
-              "id": "163d8749-4ab6-4819-8677-35ac74d3305d",
-              "leftValue": "={{ $json.data }}",
-              "rightValue": "",
-              "operator": {
-                "type": "string",
-                "operation": "notEmpty",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
+        "mode": "raw",
+        "jsonOutput": "={\n  \"service\": \"Redis\",\n  \"url\": \"db.hjedi.net\"\n}\n ",
         "options": {}
       },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.3,
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
       "position": [
-        192,
-        512
+        -32,
+        560
       ],
-      "id": "e1d465c5-153e-4606-816b-2e489ee2bfe2",
-      "name": "Check Connection - Piwingo",
-      "alwaysOutputData": true,
-      "onError": "continueRegularOutput"
+      "id": "9485cc2f-3b42-4f6b-8db3-e66f341fb53a",
+      "name": "Redis Fields"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"service\": \"Registry\",\n  \"url\": \"registry.hjedi.net\"\n}\n ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -32,
+        720
+      ],
+      "id": "70bf4f14-87ea-4c70-9771-c5c92a03ceac",
+      "name": "Registry Data"
+    },
+    {
+      "parameters": {
+        "url": "https://registry.hjedi.net",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        144,
+        720
+      ],
+      "id": "498a3f18-fef3-477d-9053-2d8454d74ff8",
+      "name": "Registry Check",
+      "alwaysOutputData": false,
+      "notesInFlow": false,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://registryui.hjedi.net",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        144,
+        896
+      ],
+      "id": "01ed72ec-d016-48de-9326-9ef1d3847790",
+      "name": "RegistryUI Check",
+      "alwaysOutputData": false,
+      "notesInFlow": false,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"service\": \"RegistryUI\",\n  \"url\": \"registryui.hjedi.net\"\n}\n ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -32,
+        896
+      ],
+      "id": "7420063d-b754-4cc9-8807-8b07fe9d14b2",
+      "name": "RegistryUI Data"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [
+        144,
+        560
+      ],
+      "id": "d9d26af9-e046-4115-a58f-761eb982c5af",
+      "name": "Redis Check",
+      "credentials": {
+        "redis": {
+          "id": "qieaTt0bFVo3WgGZ",
+          "name": "Redis account"
+        }
+      },
+      "onError": "continueErrorOutput"
     }
   ],
   "pinData": {},
   "settings": {
     "executionOrder": "v1",
     "binaryMode": "separate",
-    "availableInMCP": false
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "errorWorkflow": "l6cTBPD1mo-Amcj4rShqQ",
+    "callerPolicy": "workflowsFromSameOwner",
+    "executionTimeout": 600,
+    "timezone": "America/Los_Angeles",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": false,
+    "saveManualExecutions": true
   },
   "shared": [
     {
@@ -356,7 +1131,7 @@
       "name": "healthcheck"
     }
   ],
-  "triggerCount": 0,
-  "updatedAt": "2026-02-06T04:09:15.427Z",
-  "versionId": "27ea55da-7268-483b-b3bc-fc482150e80d"
+  "triggerCount": 1,
+  "updatedAt": "2026-02-06T16:01:27.895Z",
+  "versionId": "b7f2964f-fa5e-4b65-ae16-4cbfb8c3ae1e"
 }
