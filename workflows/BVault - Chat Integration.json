@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-02-05T21:03:51.000Z",
-    "createdAt": "2026-02-05T06:37:00.082Z",
-    "versionId": "38102ee2-4754-48dc-8e36-e2446d90d9ae",
+    "updatedAt": "2026-02-06T14:57:45.000Z",
+    "createdAt": "2026-02-06T14:57:32.704Z",
+    "versionId": "c154cd78-0f1f-4410-8bad-08f8af89dbe6",
     "workflowId": "J_PBKwfrkFmoZUzbivBzh",
     "nodes": [
       {
@@ -61,7 +61,7 @@
         "credentials": {
           "sshPrivateKey": {
             "id": "zMpYEN80B0t1Q58t",
-            "name": "SSH Private Key account"
+            "name": "SSH Osgiliath"
           }
         }
       },
@@ -124,11 +124,11 @@
       }
     },
     "authors": "Brian Hirst",
-    "name": "Version 38102ee2",
+    "name": "Version c154cd78",
     "description": "",
-    "autosaved": true
+    "autosaved": false
   },
-  "activeVersionId": "38102ee2-4754-48dc-8e36-e2446d90d9ae",
+  "activeVersionId": "c154cd78-0f1f-4410-8bad-08f8af89dbe6",
   "connections": {
     "Telegram Trigger": {
       "main": [
@@ -276,6 +276,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-02-06T03:58:39.317Z",
-  "versionId": "ec633a2b-0929-44ce-a112-a407fd85dd0d"
+  "updatedAt": "2026-02-06T14:57:32.701Z",
+  "versionId": "c154cd78-0f1f-4410-8bad-08f8af89dbe6"
 }
