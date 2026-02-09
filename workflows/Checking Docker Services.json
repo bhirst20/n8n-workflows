@@ -894,7 +894,8 @@
         400
       ],
       "id": "fd8f7c7c-719f-4e7d-b4b9-2a90a3b182e8",
-      "name": "Piwingo Fields"
+      "name": "Piwingo Fields",
+      "disabled": true
     },
     {
       "parameters": {
@@ -934,6 +935,7 @@
       "name": "Piwingo Check",
       "alwaysOutputData": false,
       "notesInFlow": true,
+      "disabled": true,
       "onError": "continueErrorOutput"
     },
     {
@@ -1132,6 +1134,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2026-02-06T16:01:27.895Z",
-  "versionId": "b7f2964f-fa5e-4b65-ae16-4cbfb8c3ae1e"
+  "updatedAt": "2026-02-08T17:22:04.388Z",
+  "versionId": "22d7c29a-2bf4-4e26-9026-bc73e2fd34ca"
 }
