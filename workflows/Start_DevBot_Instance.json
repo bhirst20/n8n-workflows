@@ -67,7 +67,7 @@
         "sendBody": true,
         "contentType": "raw",
         "rawContentType": "text/html",
-        "body": "DevBot instance has been started",
+        "body": "DevBot instance has been started. At: ssh ubuntu@3.13.211.92",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -109,6 +109,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2026-02-06T04:09:54.625Z",
-  "versionId": "b7658185-f0e3-4e32-babe-6bfdd1ec8e44"
+  "updatedAt": "2026-02-18T14:43:58.151Z",
+  "versionId": "3466ace2-06ca-48d9-b574-61f79d2b84c0"
 }
