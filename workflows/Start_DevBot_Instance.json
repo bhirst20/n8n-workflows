@@ -46,6 +46,18 @@
             {
               "name": "token",
               "value": "cXO7MjPUrt2z5sGtlZIHVvKya62Z9diuCIWYhpowR2hbsH312ELYdSzluyS7gdYqcXO7MjPUrt2z5sGtlZIHVvKya62Z9diuCIWYhpowR2hbsH312ELYdSzluyS7gdYqcXO7MjPUrt2z5sGtlZIHVvKya62Z9diuCIWYhpowR2hbsH312ELYdSzluyS7gdYq"
+            },
+            {
+              "name": "url",
+              "value": "api.cloud.hjedi.net"
+            },
+            {
+              "name": "hosted_zone_id",
+              "value": "Z3O56SG4D79RCT"
+            },
+            {
+              "name": "operation",
+              "value": "start"
             }
           ]
         },
@@ -109,6 +121,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2026-02-18T14:43:58.151Z",
-  "versionId": "3466ace2-06ca-48d9-b574-61f79d2b84c0"
+  "updatedAt": "2026-04-21T04:55:23.467Z",
+  "versionId": "1beafe78-1fdb-4587-8fee-34b70110a0b4"
 }
