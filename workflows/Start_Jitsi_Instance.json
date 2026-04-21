@@ -1,0 +1,203 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Start Instance": {
+      "main": [
+        [
+          {
+            "node": "Message NTFY",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Start Instance",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message NTFY": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Stop Instance",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-04-21T04:18:55.271Z",
+  "id": "jyB8QWWrK55BFi6u",
+  "isArchived": false,
+  "meta": null,
+  "name": "Start_Jitsi_Instance",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://w7ktsotuhu6khkybbi673rywtq0mzjth.lambda-url.us-east-2.on.aws/",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "instance_id",
+              "value": "i-0f7a5700cbad6b5c9"
+            },
+            {
+              "name": "token",
+              "value": "cXO7MjPUrt2z5sGtlZIHVvKya62Z9diuCIWYhpowR2hbsH312ELYdSzluyS7gdYqcXO7MjPUrt2z5sGtlZIHVvKya62Z9diuCIWYhpowR2hbsH312ELYdSzluyS7gdYqcXO7MjPUrt2z5sGtlZIHVvKya62Z9diuCIWYhpowR2hbsH312ELYdSzluyS7gdYq"
+            },
+            {
+              "name": "url",
+              "value": "jitsi.hjedi.net"
+            },
+            {
+              "name": "hosted_zone_id",
+              "value": "Z3O56SG4D79RCT"
+            },
+            {
+              "name": "operation",
+              "value": "start"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        224,
+        0
+      ],
+      "id": "9902a86f-6123-4d32-aeff-c0271203b118",
+      "name": "Start Instance"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://ntfy.sh/svjgQ5oxGZJoizCu",
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "text/html",
+        "body": "DevBot instance has been started. At: ssh ubuntu@3.13.211.92",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        448,
+        0
+      ],
+      "id": "908206d2-8664-48a2-bbbc-0ae7ce6f6c32",
+      "name": "Message NTFY"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "fc3676ae-fa82-4af2-8cd2-6408fc20ca25",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "amount": 0.25,
+        "unit": "hours"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        656,
+        0
+      ],
+      "id": "c490bad3-ef93-4d88-a51f-320354cf23e9",
+      "name": "Wait",
+      "webhookId": "f3406ef5-f057-43cf-8af7-be98bf0db1e0"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://w7ktsotuhu6khkybbi673rywtq0mzjth.lambda-url.us-east-2.on.aws/",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "instance_id",
+              "value": "i-0f7a5700cbad6b5c9"
+            },
+            {
+              "name": "token",
+              "value": "cXO7MjPUrt2z5sGtlZIHVvKya62Z9diuCIWYhpowR2hbsH312ELYdSzluyS7gdYqcXO7MjPUrt2z5sGtlZIHVvKya62Z9diuCIWYhpowR2hbsH312ELYdSzluyS7gdYqcXO7MjPUrt2z5sGtlZIHVvKya62Z9diuCIWYhpowR2hbsH312ELYdSzluyS7gdYq"
+            },
+            {
+              "name": "url",
+              "value": "jitsi.hjedi.net"
+            },
+            {
+              "name": "hosted_zone_id",
+              "value": "Z3O56SG4D79RCT"
+            },
+            {
+              "name": "operation",
+              "value": "stop"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        864,
+        0
+      ],
+      "id": "78d22000-e625-4e99-a5d6-22f49c305572",
+      "name": "Stop Instance"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-04-21T04:18:55.278Z",
+      "createdAt": "2026-04-21T04:18:55.278Z",
+      "role": "workflow:owner",
+      "workflowId": "jyB8QWWrK55BFi6u",
+      "projectId": "Qi7hejIuuHn0WOEG"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-04-21T05:00:33.026Z",
+  "versionId": "cc157d37-8375-4615-9396-37a294c93cd5"
+}
