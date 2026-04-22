@@ -24,6 +24,28 @@
           }
         ]
       ]
+    },
+    "Message NTFY": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Stop Instance",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2026-02-06T04:09:24.004Z",
@@ -79,7 +101,7 @@
         "sendBody": true,
         "contentType": "raw",
         "rawContentType": "text/html",
-        "body": "DevBot instance has been started. At: ssh ubuntu@3.13.211.92",
+        "body": "=DevBot instance has been started at {{ $json.public_ip }}",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -101,6 +123,61 @@
       ],
       "id": "b35bddec-f974-4d14-8c86-d720dec8a43f",
       "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "amount": 8,
+        "unit": "hours"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        656,
+        0
+      ],
+      "id": "27d3d139-cc67-4ac1-9624-6e5a338b1381",
+      "name": "Wait",
+      "webhookId": "fbee5c71-c9c5-4773-9531-dfcf0155574c"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://w7ktsotuhu6khkybbi673rywtq0mzjth.lambda-url.us-east-2.on.aws/",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "instance_id",
+              "value": "i-0541a05a0f2b48056"
+            },
+            {
+              "name": "token",
+              "value": "cXO7MjPUrt2z5sGtlZIHVvKya62Z9diuCIWYhpowR2hbsH312ELYdSzluyS7gdYqcXO7MjPUrt2z5sGtlZIHVvKya62Z9diuCIWYhpowR2hbsH312ELYdSzluyS7gdYqcXO7MjPUrt2z5sGtlZIHVvKya62Z9diuCIWYhpowR2hbsH312ELYdSzluyS7gdYq"
+            },
+            {
+              "name": "url",
+              "value": "jitsi.hjedi.net"
+            },
+            {
+              "name": "hosted_zone_id",
+              "value": "Z3O56SG4D79RCT"
+            },
+            {
+              "name": "operation",
+              "value": "stop"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        896,
+        0
+      ],
+      "id": "067457f2-48a8-4e45-a131-9aabbceabe9b",
+      "name": "Stop Instance"
     }
   ],
   "pinData": {},
@@ -121,6 +198,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2026-04-21T04:55:23.467Z",
-  "versionId": "1beafe78-1fdb-4587-8fee-34b70110a0b4"
+  "updatedAt": "2026-04-22T02:03:16.957Z",
+  "versionId": "d5b6fd68-f847-4bf5-8d65-57f493f02edb"
 }
