@@ -101,7 +101,7 @@
         "sendBody": true,
         "contentType": "raw",
         "rawContentType": "text/html",
-        "body": "DevBot instance has been started. At: ssh ubuntu@3.13.211.92",
+        "body": "=Jitsi instance has been started at {{ $json.public_ip }}",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -126,7 +126,7 @@
     },
     {
       "parameters": {
-        "amount": 0.25,
+        "amount": 7,
         "unit": "hours"
       },
       "type": "n8n-nodes-base.wait",
@@ -198,6 +198,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2026-04-21T05:00:33.026Z",
-  "versionId": "cc157d37-8375-4615-9396-37a294c93cd5"
+  "updatedAt": "2026-04-22T02:03:38.170Z",
+  "versionId": "64ae1c82-c6cd-4c43-a39d-89dc72bc8a4e"
 }
