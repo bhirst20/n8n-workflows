@@ -1,0 +1,170 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Send to Lambda",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send to Lambda": {
+      "main": [
+        [
+          {
+            "node": "Message NTFY",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-04-26T15:20:20.030Z",
+  "id": "0T_cMavhMdJCZpk4PiBZi",
+  "isArchived": false,
+  "meta": null,
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Route 53 Tool",
+        "formDescription": "Using the fields below will create an entry in Route 53.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "What is the Zone Name?",
+              "defaultValue": "hjedi.net"
+            },
+            {
+              "fieldLabel": "Source (include the Zone name)",
+              "defaultValue": "SOURCE.hjedi.net"
+            },
+            {
+              "fieldLabel": "Target",
+              "defaultValue": "192.168.4."
+            },
+            {
+              "fieldLabel": "Type",
+              "fieldType": "dropdown",
+              "defaultValue": "A",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "A"
+                  },
+                  {
+                    "option": "CNAME"
+                  }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "TTL",
+              "defaultValue": "300"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.5,
+      "position": [
+        -32,
+        0
+      ],
+      "id": "fe71ee37-c39e-4242-857c-3f21e7c3859b",
+      "name": "On form submission",
+      "webhookId": "f320ebdc-a739-45c2-8212-8d097f8ac37b"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://flyqomheqhsxxdvylsnqbp4lim0lcckx.lambda-url.us-east-2.on.aws/",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "ZoneName",
+              "value": "={{ $json[\"What is the Zone Name?\"] }}"
+            },
+            {
+              "name": "Source",
+              "value": "={{ $json[\"Source (include the Zone name)\"] }}"
+            },
+            {
+              "name": "Target",
+              "value": "={{ $json.Target }}"
+            },
+            {
+              "name": "Type",
+              "value": "={{ $json.Type }}"
+            },
+            {
+              "name": "TTL",
+              "value": "={{ $json.TTL }}"
+            },
+            {
+              "name": "AUTH_TOKEN",
+              "value": "=YQxtWuVRwmjTiR8ap9D0sTqtFPuAi7S9kURobOk2JopadsmcYEsiFkeFsIeJZF17"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        272,
+        0
+      ],
+      "id": "04552327-6670-4f88-896c-10ff41e58fd9",
+      "name": "Send to Lambda"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://ntfy.sh/svjgQ5oxGZJoizCu",
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "text/html",
+        "body": "=DNS Entry {{ $json.Name }} has been updated",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        560,
+        0
+      ],
+      "id": "a1cfd7f5-d4f4-4d60-8bf9-246482af4d5a",
+      "name": "Message NTFY"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-04-26T15:20:20.036Z",
+      "createdAt": "2026-04-26T15:20:20.036Z",
+      "role": "workflow:owner",
+      "workflowId": "0T_cMavhMdJCZpk4PiBZi",
+      "projectId": "Qi7hejIuuHn0WOEG"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-04-26T16:05:52.619Z",
+  "versionId": "c69e2f30-5e19-4b17-9e07-b5b36a72e50c"
+}
