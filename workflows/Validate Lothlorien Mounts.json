@@ -7,7 +7,7 @@
       "main": [
         [
           {
-            "node": "Check with the model",
+            "node": "Message a model",
             "type": "main",
             "index": 0
           }
@@ -16,13 +16,7 @@
     },
     "Check with the model": {
       "main": [
-        [
-          {
-            "node": "If",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "If": {
@@ -95,7 +89,9 @@
   "createdAt": "2026-02-06T04:10:02.976Z",
   "id": "-kl2ZVFO-29Wom3atW2Nx",
   "isArchived": false,
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "name": "Validate Lothlorien Mounts",
   "nodes": [
     {
@@ -139,12 +135,18 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 2.1,
       "position": [
-        -592,
-        0
+        -576,
+        -368
       ],
       "id": "48c7ab1c-c77f-41f0-8437-cd2f2b152925",
       "name": "Check with the model",
-      "alwaysOutputData": true
+      "alwaysOutputData": true,
+      "credentials": {
+        "openAiApi": {
+          "id": "huwJyiNITPz4NUS6",
+          "name": "OpenAi account"
+        }
+      }
     },
     {
       "parameters": {
@@ -280,7 +282,13 @@
       ],
       "id": "d6cad99f-5120-49b1-8df1-fa37968e7bcf",
       "name": "Check with the model1",
-      "alwaysOutputData": true
+      "alwaysOutputData": true,
+      "credentials": {
+        "openAiApi": {
+          "id": "huwJyiNITPz4NUS6",
+          "name": "OpenAi account"
+        }
+      }
     },
     {
       "parameters": {
@@ -327,6 +335,37 @@
       "typeVersion": 1,
       "id": "fc4df6c7-8599-439f-97b3-acef4b16fef0",
       "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gemma4:latest",
+          "mode": "id"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=You are an IT expert.  I need you to monitor health on this server, doing things that cannot be done by other things. \n\nThe following should be considered using the output at the bottom of the prompt and keep the reply very simple (mount <MOUNTPOINT>: success or mount<MOUNTPOINT>: fail).\n- Confirm that we have a mount at /mnt/data with a capacity of 2 TB. \n- Confirm that we have a mount at /mnt/data_lowspeed with a capacity of 3 TB.\n- Confirm that we have a mount at /mnt/backup with a capacity of > 25 TB.\n\n {{ $json.stdout }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.ollama",
+      "typeVersion": 1,
+      "position": [
+        -592,
+        -96
+      ],
+      "id": "4c5d164e-99a7-49eb-8bac-ea7daf236d39",
+      "name": "Message a model",
+      "credentials": {
+        "ollamaApi": {
+          "id": "H7u3ojeWxXCRjvQo",
+          "name": "Ollama account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -347,6 +386,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2026-02-06T04:12:43.091Z",
-  "versionId": "2bd7bc73-fe63-488c-996e-1574005177be"
+  "updatedAt": "2026-05-21T05:19:23.323Z",
+  "versionId": "7467b982-3657-4f1f-8052-d59ad2116de7"
 }
