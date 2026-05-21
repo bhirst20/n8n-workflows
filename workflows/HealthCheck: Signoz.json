@@ -1,0 +1,300 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-05-21T04:59:01.000Z",
+    "createdAt": "2026-05-21T04:58:57.578Z",
+    "versionId": "970e89aa-5845-4862-827d-7be7da60060d",
+    "workflowId": "x2z-cpOp1kcY2dd2EFMvQ",
+    "nodes": [
+      {
+        "parameters": {
+          "rule": {
+            "interval": [
+              {
+                "field": "minutes"
+              }
+            ]
+          }
+        },
+        "type": "n8n-nodes-base.scheduleTrigger",
+        "typeVersion": 1.3,
+        "position": [
+          0,
+          0
+        ],
+        "id": "02000c0a-07b6-4d38-a475-221ef037a00c",
+        "name": "Schedule Trigger"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "http://ntfy.sh/svjgQ5oxGZJoizCu",
+          "sendBody": true,
+          "contentType": "raw",
+          "rawContentType": "text/html",
+          "body": "Signoz is down!",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          688,
+          96
+        ],
+        "id": "71464486-f7d0-4b16-aa76-8db6ac50af19",
+        "name": "NTFY Notification"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "3556d3f3-44eb-4f4a-98a8-347b3cd2c7dd",
+                "leftValue": "={{ $json.statusCode }}",
+                "rightValue": 200,
+                "operator": {
+                  "type": "number",
+                  "operation": "equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          416,
+          0
+        ],
+        "id": "38bfd486-c6e9-4e0d-8f9e-eeb2c1fc7c6c",
+        "name": "CheckHealth"
+      },
+      {
+        "parameters": {
+          "url": "https://signoz.hjedi.net/login",
+          "options": {
+            "response": {
+              "response": {
+                "fullResponse": true
+              }
+            }
+          }
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          208,
+          0
+        ],
+        "id": "2c61ebbd-e42b-4c3f-a0a4-2f497febbe04",
+        "name": "Get Signoz"
+      }
+    ],
+    "connections": {
+      "Schedule Trigger": {
+        "main": [
+          [
+            {
+              "node": "Get Signoz",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "CheckHealth": {
+        "main": [
+          [],
+          [
+            {
+              "node": "NTFY Notification",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get Signoz": {
+        "main": [
+          [
+            {
+              "node": "CheckHealth",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Brian Hirst",
+    "name": "Version 970e89aa",
+    "description": "",
+    "autosaved": true
+  },
+  "activeVersionId": "970e89aa-5845-4862-827d-7be7da60060d",
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Signoz",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CheckHealth": {
+      "main": [
+        [],
+        [
+          {
+            "node": "NTFY Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Signoz": {
+      "main": [
+        [
+          {
+            "node": "CheckHealth",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-05-21T04:44:41.081Z",
+  "id": "x2z-cpOp1kcY2dd2EFMvQ",
+  "isArchived": false,
+  "meta": null,
+  "name": "HealthCheck: Signoz",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "02000c0a-07b6-4d38-a475-221ef037a00c",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://ntfy.sh/svjgQ5oxGZJoizCu",
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "text/html",
+        "body": "Signoz is down!",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        688,
+        96
+      ],
+      "id": "71464486-f7d0-4b16-aa76-8db6ac50af19",
+      "name": "NTFY Notification"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "3556d3f3-44eb-4f4a-98a8-347b3cd2c7dd",
+              "leftValue": "={{ $json.statusCode }}",
+              "rightValue": 200,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        416,
+        0
+      ],
+      "id": "38bfd486-c6e9-4e0d-8f9e-eeb2c1fc7c6c",
+      "name": "CheckHealth"
+    },
+    {
+      "parameters": {
+        "url": "https://signoz.hjedi.net/login",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "2c61ebbd-e42b-4c3f-a0a4-2f497febbe04",
+      "name": "Get Signoz"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "errorWorkflow": "l6cTBPD1mo-Amcj4rShqQ",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-05-21T04:44:41.086Z",
+      "createdAt": "2026-05-21T04:44:41.086Z",
+      "role": "workflow:owner",
+      "workflowId": "x2z-cpOp1kcY2dd2EFMvQ",
+      "projectId": "Qi7hejIuuHn0WOEG"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-05-21T05:16:45.511Z",
+  "versionId": "970e89aa-5845-4862-827d-7be7da60060d"
+}
