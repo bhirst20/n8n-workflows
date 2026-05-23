@@ -271,7 +271,10 @@
         0
       ],
       "id": "2c61ebbd-e42b-4c3f-a0a4-2f497febbe04",
-      "name": "Get Signoz"
+      "name": "Get Signoz",
+      "executeOnce": false,
+      "notesInFlow": false,
+      "onError": "continueErrorOutput"
     }
   ],
   "pinData": {},
@@ -295,6 +298,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-05-21T05:16:45.511Z",
-  "versionId": "970e89aa-5845-4862-827d-7be7da60060d"
+  "updatedAt": "2026-05-23T02:59:30.603Z",
+  "versionId": "9551f469-2856-4845-b091-126fc452c4fc"
 }
