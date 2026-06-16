@@ -1,0 +1,874 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-06-16T06:36:20.000Z",
+    "createdAt": "2026-06-16T06:36:09.154Z",
+    "versionId": "d1e94452-f356-4350-8dc1-fcdac4fd3704",
+    "workflowId": "rtjTqiGWEi7nK1U5",
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "c6558de7-aeb6-45a7-8aeb-6aeffedbfefa",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2.1,
+        "position": [
+          -144,
+          320
+        ],
+        "id": "0eae21ba-7ac8-4c18-9c6e-3a0b694fd3c6",
+        "name": "Webhook",
+        "webhookId": "c6558de7-aeb6-45a7-8aeb-6aeffedbfefa"
+      },
+      {
+        "parameters": {
+          "schema": {
+            "__rl": true,
+            "value": "public",
+            "mode": "list",
+            "cachedResultName": "public"
+          },
+          "table": {
+            "__rl": true,
+            "value": "readings",
+            "mode": "list",
+            "cachedResultName": "readings"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "value": "={{ $json.body.value }}",
+              "metric": "={{ $json.body.metric }}",
+              "source": "={{ $json.body.source }}"
+            },
+            "matchingColumns": [
+              "id"
+            ],
+            "schema": [
+              {
+                "id": "id",
+                "displayName": "id",
+                "required": false,
+                "defaultMatch": true,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true,
+                "removed": false
+              },
+              {
+                "id": "time",
+                "displayName": "time",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "dateTime",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "metric",
+                "displayName": "metric",
+                "required": true,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "value",
+                "displayName": "value",
+                "required": true,
+                "defaultMatch": false,
+                "display": true,
+                "type": "number",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "tank",
+                "displayName": "tank",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "source",
+                "displayName": "source",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.6,
+        "position": [
+          80,
+          -64
+        ],
+        "id": "7cf63c2d-4020-4348-bda5-189509da1d34",
+        "name": "Insert rows in a table",
+        "credentials": {
+          "postgres": {
+            "id": "2SMxwoG8osFIUKUk",
+            "name": "psql - aqualab"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "http://signoz.hjedi.net:4318/v1/metrics",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"resourceMetrics\": [{\n    \"resource\": {\n      \"attributes\": [\n        { \"key\": \"service.name\", \"value\": { \"stringValue\": \"aquaponics-manual\" } }\n      ]\n    },\n    \"scopeMetrics\": [{\n      \"scope\": { \"name\": \"n8n-weekly-readings\" },\n      \"metrics\": [{\n        \"name\": \"aquaponics.nitrate_ppm\",\n        \"unit\": \"ppm\",\n        \"gauge\": {\n          \"dataPoints\": [{\n            \"timeUnixNano\": \"1718400000000000000\",\n            \"asDouble\": {{ $json.body.value }},\n            \"attributes\": [\n              { \"key\": \"tank\", \"value\": { \"stringValue\": \"main\" } }\n            ]\n          }]\n        }\n      }]\n    }]\n  }]\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          304,
+          128
+        ],
+        "id": "82be972f-8fd9-4f18-a059-28eda32e6d63",
+        "name": "HTTP nitrate"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "935341ab-29a3-4b8d-aef8-1a30a8c1d671",
+                "leftValue": "={{ $json.body.metric }}",
+                "rightValue": "nitrate",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          80,
+          128
+        ],
+        "id": "dfdf35be-4664-41fb-a037-6f69f4029104",
+        "name": "If nitrate"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "http://signoz.hjedi.net:4318/v1/metrics",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"resourceMetrics\": [{\n    \"resource\": {\n      \"attributes\": [\n        { \"key\": \"service.name\", \"value\": { \"stringValue\": \"aquaponics-manual\" } }\n      ]\n    },\n    \"scopeMetrics\": [{\n      \"scope\": { \"name\": \"n8n-weekly-readings\" },\n      \"metrics\": [{\n        \"name\": \"aquaponics.ammonia_ppm\",\n        \"unit\": \"ppm\",\n        \"gauge\": {\n          \"dataPoints\": [{\n            \"timeUnixNano\": \"1718400000000000000\",\n            \"asDouble\": {{ $json.body.value }},\n            \"attributes\": [\n              { \"key\": \"tank\", \"value\": { \"stringValue\": \"main\" } }\n            ]\n          }]\n        }\n      }]\n    }]\n  }]\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          304,
+          320
+        ],
+        "id": "d542dadd-358f-4b7c-af40-334b8e25ee7c",
+        "name": "HTTP temp"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "935341ab-29a3-4b8d-aef8-1a30a8c1d671",
+                "leftValue": "={{ $json.body.metric }}",
+                "rightValue": "ammonia",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          80,
+          320
+        ],
+        "id": "1e24cdb6-dcdc-43d0-a33b-359042d0e1c3",
+        "name": "If ammonia"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "935341ab-29a3-4b8d-aef8-1a30a8c1d671",
+                "leftValue": "={{ $json.body.metric }}",
+                "rightValue": "nitrite",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          80,
+          512
+        ],
+        "id": "ca0db2ed-e04c-4b80-8643-bee406bbfd30",
+        "name": "If nitrite"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "http://signoz.hjedi.net:4318/v1/metrics",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"resourceMetrics\": [{\n    \"resource\": {\n      \"attributes\": [\n        { \"key\": \"service.name\", \"value\": { \"stringValue\": \"aquaponics-manual\" } }\n      ]\n    },\n    \"scopeMetrics\": [{\n      \"scope\": { \"name\": \"n8n-weekly-readings\" },\n      \"metrics\": [{\n        \"name\": \"aquaponics.nitrate_ppm\",\n        \"unit\": \"ppm\",\n        \"gauge\": {\n          \"dataPoints\": [{\n            \"timeUnixNano\": \"1718400000000000000\",\n            \"asDouble\": {{ $json.body.value }},\n            \"attributes\": [\n              { \"key\": \"tank\", \"value\": { \"stringValue\": \"main\" } }\n            ]\n          }]\n        }\n      }]\n    }]\n  }]\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          304,
+          512
+        ],
+        "id": "ca6baa35-864e-4669-ae01-c921ac911009",
+        "name": "HTTP nitrite"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "http://signoz.hjedi.net:4318/v1/metrics",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"resourceMetrics\": [{\n    \"resource\": {\n      \"attributes\": [\n        { \"key\": \"service.name\", \"value\": { \"stringValue\": \"aquaponics-manual\" } }\n      ]\n    },\n    \"scopeMetrics\": [{\n      \"scope\": { \"name\": \"n8n-weekly-readings\" },\n      \"metrics\": [{\n        \"name\": \"aquaponics.ph\",\n        \"unit\": \"ppm\",\n        \"gauge\": {\n          \"dataPoints\": [{\n            \"timeUnixNano\": \"1718400000000000000\",\n            \"asDouble\": {{ $json.body.value }},\n            \"attributes\": [\n              { \"key\": \"tank\", \"value\": { \"stringValue\": \"main\" } }\n            ]\n          }]\n        }\n      }]\n    }]\n  }]\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          304,
+          704
+        ],
+        "id": "87bed5c8-4449-4661-a207-33dafecd1349",
+        "name": "HTTP PH from Form"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "935341ab-29a3-4b8d-aef8-1a30a8c1d671",
+                "leftValue": "={{ $json.body.metric }}",
+                "rightValue": "ph",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                }
+              },
+              {
+                "id": "5285ecc4-ba8e-46ac-a804-17d9ad2b33c6",
+                "leftValue": "={{ $json.body.source }}",
+                "rightValue": "\"form\"",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals",
+                  "name": "filter.operator.equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          80,
+          704
+        ],
+        "id": "06e8171a-7b23-482c-a47b-35fef51e116f",
+        "name": "If ph"
+      }
+    ],
+    "connections": {
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "Insert rows in a table",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "If nitrate",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "If ammonia",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "If nitrite",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "If ph",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "HTTP nitrate": {
+        "main": [
+          []
+        ]
+      },
+      "If nitrate": {
+        "main": [
+          [
+            {
+              "node": "HTTP nitrate",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If ammonia": {
+        "main": [
+          [
+            {
+              "node": "HTTP temp",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If nitrite": {
+        "main": [
+          [
+            {
+              "node": "HTTP nitrite",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If ph": {
+        "main": [
+          [
+            {
+              "node": "HTTP PH from Form",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Brian Hirst",
+    "name": "Version d1e94452",
+    "description": "",
+    "autosaved": true
+  },
+  "activeVersionId": "d1e94452-f356-4350-8dc1-fcdac4fd3704",
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Insert rows in a table",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If nitrate",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If ammonia",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If nitrite",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If ph",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP nitrate": {
+      "main": [
+        []
+      ]
+    },
+    "If nitrate": {
+      "main": [
+        [
+          {
+            "node": "HTTP nitrate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If ammonia": {
+      "main": [
+        [
+          {
+            "node": "HTTP temp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If nitrite": {
+      "main": [
+        [
+          {
+            "node": "HTTP nitrite",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If ph": {
+      "main": [
+        [
+          {
+            "node": "HTTP PH from Form",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-06-16T04:59:26.208Z",
+  "id": "rtjTqiGWEi7nK1U5",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Aquaponics_Lab_Execute",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "c6558de7-aeb6-45a7-8aeb-6aeffedbfefa",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -144,
+        320
+      ],
+      "id": "0eae21ba-7ac8-4c18-9c6e-3a0b694fd3c6",
+      "name": "Webhook",
+      "webhookId": "c6558de7-aeb6-45a7-8aeb-6aeffedbfefa"
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "value": "public",
+          "mode": "list",
+          "cachedResultName": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "readings",
+          "mode": "list",
+          "cachedResultName": "readings"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "value": "={{ $json.body.value }}",
+            "metric": "={{ $json.body.metric }}",
+            "source": "={{ $json.body.source }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "time",
+              "displayName": "time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "metric",
+              "displayName": "metric",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "value",
+              "displayName": "value",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "tank",
+              "displayName": "tank",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "source",
+              "displayName": "source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        80,
+        -64
+      ],
+      "id": "7cf63c2d-4020-4348-bda5-189509da1d34",
+      "name": "Insert rows in a table",
+      "credentials": {
+        "postgres": {
+          "id": "2SMxwoG8osFIUKUk",
+          "name": "psql - aqualab"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://signoz.hjedi.net:4318/v1/metrics",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"resourceMetrics\": [{\n    \"resource\": {\n      \"attributes\": [\n        { \"key\": \"service.name\", \"value\": { \"stringValue\": \"aquaponics-manual\" } }\n      ]\n    },\n    \"scopeMetrics\": [{\n      \"scope\": { \"name\": \"n8n-weekly-readings\" },\n      \"metrics\": [{\n        \"name\": \"aquaponics.nitrate_ppm\",\n        \"unit\": \"ppm\",\n        \"gauge\": {\n          \"dataPoints\": [{\n            \"timeUnixNano\": \"1718400000000000000\",\n            \"asDouble\": {{ $json.body.value }},\n            \"attributes\": [\n              { \"key\": \"tank\", \"value\": { \"stringValue\": \"main\" } }\n            ]\n          }]\n        }\n      }]\n    }]\n  }]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        304,
+        128
+      ],
+      "id": "82be972f-8fd9-4f18-a059-28eda32e6d63",
+      "name": "HTTP nitrate"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "935341ab-29a3-4b8d-aef8-1a30a8c1d671",
+              "leftValue": "={{ $json.body.metric }}",
+              "rightValue": "nitrate",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        80,
+        128
+      ],
+      "id": "dfdf35be-4664-41fb-a037-6f69f4029104",
+      "name": "If nitrate"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://signoz.hjedi.net:4318/v1/metrics",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"resourceMetrics\": [{\n    \"resource\": {\n      \"attributes\": [\n        { \"key\": \"service.name\", \"value\": { \"stringValue\": \"aquaponics-manual\" } }\n      ]\n    },\n    \"scopeMetrics\": [{\n      \"scope\": { \"name\": \"n8n-weekly-readings\" },\n      \"metrics\": [{\n        \"name\": \"aquaponics.ammonia_ppm\",\n        \"unit\": \"ppm\",\n        \"gauge\": {\n          \"dataPoints\": [{\n            \"timeUnixNano\": \"1718400000000000000\",\n            \"asDouble\": {{ $json.body.value }},\n            \"attributes\": [\n              { \"key\": \"tank\", \"value\": { \"stringValue\": \"main\" } }\n            ]\n          }]\n        }\n      }]\n    }]\n  }]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        304,
+        320
+      ],
+      "id": "d542dadd-358f-4b7c-af40-334b8e25ee7c",
+      "name": "HTTP temp"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "935341ab-29a3-4b8d-aef8-1a30a8c1d671",
+              "leftValue": "={{ $json.body.metric }}",
+              "rightValue": "ammonia",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        80,
+        320
+      ],
+      "id": "1e24cdb6-dcdc-43d0-a33b-359042d0e1c3",
+      "name": "If ammonia"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "935341ab-29a3-4b8d-aef8-1a30a8c1d671",
+              "leftValue": "={{ $json.body.metric }}",
+              "rightValue": "nitrite",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        80,
+        512
+      ],
+      "id": "ca0db2ed-e04c-4b80-8643-bee406bbfd30",
+      "name": "If nitrite"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://signoz.hjedi.net:4318/v1/metrics",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"resourceMetrics\": [{\n    \"resource\": {\n      \"attributes\": [\n        { \"key\": \"service.name\", \"value\": { \"stringValue\": \"aquaponics-manual\" } }\n      ]\n    },\n    \"scopeMetrics\": [{\n      \"scope\": { \"name\": \"n8n-weekly-readings\" },\n      \"metrics\": [{\n        \"name\": \"aquaponics.nitrate_ppm\",\n        \"unit\": \"ppm\",\n        \"gauge\": {\n          \"dataPoints\": [{\n            \"timeUnixNano\": \"1718400000000000000\",\n            \"asDouble\": {{ $json.body.value }},\n            \"attributes\": [\n              { \"key\": \"tank\", \"value\": { \"stringValue\": \"main\" } }\n            ]\n          }]\n        }\n      }]\n    }]\n  }]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        304,
+        512
+      ],
+      "id": "ca6baa35-864e-4669-ae01-c921ac911009",
+      "name": "HTTP nitrite"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://signoz.hjedi.net:4318/v1/metrics",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"resourceMetrics\": [{\n    \"resource\": {\n      \"attributes\": [\n        { \"key\": \"service.name\", \"value\": { \"stringValue\": \"aquaponics-manual\" } }\n      ]\n    },\n    \"scopeMetrics\": [{\n      \"scope\": { \"name\": \"n8n-weekly-readings\" },\n      \"metrics\": [{\n        \"name\": \"aquaponics.ph\",\n        \"unit\": \"ppm\",\n        \"gauge\": {\n          \"dataPoints\": [{\n            \"timeUnixNano\": \"1718400000000000000\",\n            \"asDouble\": {{ $json.body.value }},\n            \"attributes\": [\n              { \"key\": \"tank\", \"value\": { \"stringValue\": \"main\" } }\n            ]\n          }]\n        }\n      }]\n    }]\n  }]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        304,
+        704
+      ],
+      "id": "87bed5c8-4449-4661-a207-33dafecd1349",
+      "name": "HTTP PH from Form"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "935341ab-29a3-4b8d-aef8-1a30a8c1d671",
+              "leftValue": "={{ $json.body.metric }}",
+              "rightValue": "ph",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "5285ecc4-ba8e-46ac-a804-17d9ad2b33c6",
+              "leftValue": "={{ $json.body.source }}",
+              "rightValue": "\"form\"",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        80,
+        704
+      ],
+      "id": "06e8171a-7b23-482c-a47b-35fef51e116f",
+      "name": "If ph"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed",
+    "errorWorkflow": "l6cTBPD1mo-Amcj4rShqQ",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-06-16T04:59:26.210Z",
+      "createdAt": "2026-06-16T04:59:26.210Z",
+      "role": "workflow:owner",
+      "workflowId": "rtjTqiGWEi7nK1U5",
+      "projectId": "Qi7hejIuuHn0WOEG"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-06-16T06:36:09.153Z",
+  "versionId": "d1e94452-f356-4350-8dc1-fcdac4fd3704"
+}
