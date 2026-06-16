@@ -1,0 +1,688 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-06-16T06:37:16.000Z",
+    "createdAt": "2026-06-16T06:37:13.608Z",
+    "versionId": "645ae82f-7528-4b7d-9586-91f5d2c960a5",
+    "workflowId": "f3hDcbZkt8ES0djv",
+    "nodes": [
+      {
+        "parameters": {
+          "formTitle": "Tank Data",
+          "formDescription": "Enter the data you have available:",
+          "formFields": {
+            "values": [
+              {
+                "fieldLabel": "PH Level",
+                "fieldType": "number",
+                "defaultValue": "-1"
+              },
+              {
+                "fieldLabel": "Ammonia",
+                "fieldType": "number",
+                "defaultValue": "-1"
+              },
+              {
+                "fieldLabel": "Nitrite",
+                "fieldType": "number",
+                "defaultValue": "-1"
+              },
+              {
+                "fieldLabel": "Nitrate",
+                "fieldType": "number",
+                "defaultValue": "-1"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.formTrigger",
+        "typeVersion": 2.5,
+        "position": [
+          -224,
+          -16
+        ],
+        "id": "c2ffd383-2d56-4ecd-b9d4-68db49d122a9",
+        "name": "On form submission",
+        "webhookId": "ac950f3c-be22-4601-ba95-b8a9bb965c33"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://n8n.srv1334932.hstgr.cloud/webhook/c6558de7-aeb6-45a7-8aeb-6aeffedbfefa",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"metric\": \"ph\",\n  \"value\":  {{ $json[\"PH Level\"] }},\n  \"source\": \"form\"\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          224,
+          -304
+        ],
+        "id": "1de2b337-a935-4034-82fe-a01a5a000a03",
+        "name": "Send PH Check"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://n8n.srv1334932.hstgr.cloud/webhook/c6558de7-aeb6-45a7-8aeb-6aeffedbfefa",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"metric\": \"ammonia\",\n  \"value\":  {{ $json.Ammonia }},\n  \"source\": \"form\"\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          224,
+          -112
+        ],
+        "id": "0d63f926-97b5-4d14-91f6-3a2ac77fdf88",
+        "name": "Send Ammonia Check"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://n8n.srv1334932.hstgr.cloud/webhook/c6558de7-aeb6-45a7-8aeb-6aeffedbfefa",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"metric\": \"nitrite\",\n  \"value\":  {{ $json.Nitrite }},\n  \"source\": \"form\"\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          224,
+          80
+        ],
+        "id": "a89cdf71-e4d3-4757-9138-f96d8bbe2419",
+        "name": "Send Nitrite Check"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://n8n.srv1334932.hstgr.cloud/webhook/c6558de7-aeb6-45a7-8aeb-6aeffedbfefa",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"metric\": \"nitrate\",\n  \"value\":  {{ $json.Nitrate }},\n  \"source\": \"form\"\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          224,
+          272
+        ],
+        "id": "1e1072da-9e1f-48d5-ba1b-e0b9fd83bdca",
+        "name": "Send Nitrate Check"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "ad1e35cd-c44b-45d7-9433-f15ddd7c6bd7",
+                "leftValue": "={{ $json[\"PH Level\"] }}",
+                "rightValue": 0,
+                "operator": {
+                  "type": "number",
+                  "operation": "gte"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          0,
+          -304
+        ],
+        "id": "24bd636d-9de1-46f7-aa34-d4dda2ed61b4",
+        "name": "If PH"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "ad1e35cd-c44b-45d7-9433-f15ddd7c6bd7",
+                "leftValue": "={{ $json.Ammonia }}",
+                "rightValue": 0,
+                "operator": {
+                  "type": "number",
+                  "operation": "gte"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          0,
+          -112
+        ],
+        "id": "05687876-5528-457c-b9ac-374eb529fb40",
+        "name": "If Ammonia"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "ad1e35cd-c44b-45d7-9433-f15ddd7c6bd7",
+                "leftValue": "={{ $json.Nitrite }}",
+                "rightValue": 0,
+                "operator": {
+                  "type": "number",
+                  "operation": "gte"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          0,
+          80
+        ],
+        "id": "e0c9978d-b9a5-471d-877c-a2be62868832",
+        "name": "If Nitrite"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 3
+            },
+            "conditions": [
+              {
+                "id": "ad1e35cd-c44b-45d7-9433-f15ddd7c6bd7",
+                "leftValue": "={{ $json.Nitrate }}",
+                "rightValue": 0,
+                "operator": {
+                  "type": "number",
+                  "operation": "gte"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2.3,
+        "position": [
+          0,
+          272
+        ],
+        "id": "28269318-0724-4f43-a58e-f32e61f9b411",
+        "name": "If Nitrate"
+      }
+    ],
+    "connections": {
+      "On form submission": {
+        "main": [
+          [
+            {
+              "node": "If Nitrate",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "If Nitrite",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "If Ammonia",
+              "type": "main",
+              "index": 0
+            },
+            {
+              "node": "If PH",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Send Nitrate Check": {
+        "main": [
+          []
+        ]
+      },
+      "If PH": {
+        "main": [
+          [
+            {
+              "node": "Send PH Check",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If Ammonia": {
+        "main": [
+          [
+            {
+              "node": "Send Ammonia Check",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If Nitrite": {
+        "main": [
+          [
+            {
+              "node": "Send Nitrite Check",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "If Nitrate": {
+        "main": [
+          [
+            {
+              "node": "Send Nitrate Check",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Brian Hirst",
+    "name": "Version 645ae82f",
+    "description": "",
+    "autosaved": true
+  },
+  "activeVersionId": "645ae82f-7528-4b7d-9586-91f5d2c960a5",
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "If Nitrate",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If Nitrite",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If Ammonia",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If PH",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Nitrate Check": {
+      "main": [
+        []
+      ]
+    },
+    "If PH": {
+      "main": [
+        [
+          {
+            "node": "Send PH Check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Ammonia": {
+      "main": [
+        [
+          {
+            "node": "Send Ammonia Check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Nitrite": {
+      "main": [
+        [
+          {
+            "node": "Send Nitrite Check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Nitrate": {
+      "main": [
+        [
+          {
+            "node": "Send Nitrate Check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-06-16T04:55:23.789Z",
+  "id": "f3hDcbZkt8ES0djv",
+  "isArchived": false,
+  "meta": null,
+  "name": "Aquaponics_Lab_Manual_Entry",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Tank Data",
+        "formDescription": "Enter the data you have available:",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "PH Level",
+              "fieldType": "number",
+              "defaultValue": "-1"
+            },
+            {
+              "fieldLabel": "Ammonia",
+              "fieldType": "number",
+              "defaultValue": "-1"
+            },
+            {
+              "fieldLabel": "Nitrite",
+              "fieldType": "number",
+              "defaultValue": "-1"
+            },
+            {
+              "fieldLabel": "Nitrate",
+              "fieldType": "number",
+              "defaultValue": "-1"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.5,
+      "position": [
+        -224,
+        -16
+      ],
+      "id": "c2ffd383-2d56-4ecd-b9d4-68db49d122a9",
+      "name": "On form submission",
+      "webhookId": "ac950f3c-be22-4601-ba95-b8a9bb965c33"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.srv1334932.hstgr.cloud/webhook/c6558de7-aeb6-45a7-8aeb-6aeffedbfefa",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"metric\": \"ph\",\n  \"value\":  {{ $json[\"PH Level\"] }},\n  \"source\": \"form\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        224,
+        -304
+      ],
+      "id": "1de2b337-a935-4034-82fe-a01a5a000a03",
+      "name": "Send PH Check"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.srv1334932.hstgr.cloud/webhook/c6558de7-aeb6-45a7-8aeb-6aeffedbfefa",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"metric\": \"ammonia\",\n  \"value\":  {{ $json.Ammonia }},\n  \"source\": \"form\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        224,
+        -112
+      ],
+      "id": "0d63f926-97b5-4d14-91f6-3a2ac77fdf88",
+      "name": "Send Ammonia Check"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.srv1334932.hstgr.cloud/webhook/c6558de7-aeb6-45a7-8aeb-6aeffedbfefa",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"metric\": \"nitrite\",\n  \"value\":  {{ $json.Nitrite }},\n  \"source\": \"form\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        224,
+        80
+      ],
+      "id": "a89cdf71-e4d3-4757-9138-f96d8bbe2419",
+      "name": "Send Nitrite Check"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.srv1334932.hstgr.cloud/webhook/c6558de7-aeb6-45a7-8aeb-6aeffedbfefa",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"metric\": \"nitrate\",\n  \"value\":  {{ $json.Nitrate }},\n  \"source\": \"form\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        224,
+        272
+      ],
+      "id": "1e1072da-9e1f-48d5-ba1b-e0b9fd83bdca",
+      "name": "Send Nitrate Check"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "ad1e35cd-c44b-45d7-9433-f15ddd7c6bd7",
+              "leftValue": "={{ $json[\"PH Level\"] }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        0,
+        -304
+      ],
+      "id": "24bd636d-9de1-46f7-aa34-d4dda2ed61b4",
+      "name": "If PH"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "ad1e35cd-c44b-45d7-9433-f15ddd7c6bd7",
+              "leftValue": "={{ $json.Ammonia }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        0,
+        -112
+      ],
+      "id": "05687876-5528-457c-b9ac-374eb529fb40",
+      "name": "If Ammonia"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "ad1e35cd-c44b-45d7-9433-f15ddd7c6bd7",
+              "leftValue": "={{ $json.Nitrite }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        0,
+        80
+      ],
+      "id": "e0c9978d-b9a5-471d-877c-a2be62868832",
+      "name": "If Nitrite"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "ad1e35cd-c44b-45d7-9433-f15ddd7c6bd7",
+              "leftValue": "={{ $json.Nitrate }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        0,
+        272
+      ],
+      "id": "28269318-0724-4f43-a58e-f32e61f9b411",
+      "name": "If Nitrate"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed",
+    "errorWorkflow": "l6cTBPD1mo-Amcj4rShqQ",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-06-16T04:55:23.794Z",
+      "createdAt": "2026-06-16T04:55:23.794Z",
+      "role": "workflow:owner",
+      "workflowId": "f3hDcbZkt8ES0djv",
+      "projectId": "Qi7hejIuuHn0WOEG"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-06-16T06:37:13.606Z",
+  "versionId": "645ae82f-7528-4b7d-9586-91f5d2c960a5"
+}
