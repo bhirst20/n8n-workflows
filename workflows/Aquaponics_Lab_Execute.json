@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-06-16T06:36:20.000Z",
-    "createdAt": "2026-06-16T06:36:09.154Z",
-    "versionId": "d1e94452-f356-4350-8dc1-fcdac4fd3704",
+    "updatedAt": "2026-06-17T04:52:46.000Z",
+    "createdAt": "2026-06-17T04:52:35.427Z",
+    "versionId": "1f34224e-4a44-4261-9c06-e7bc4870f716",
     "workflowId": "rtjTqiGWEi7nK1U5",
     "nodes": [
       {
@@ -264,7 +264,7 @@
           "url": "http://signoz.hjedi.net:4318/v1/metrics",
           "sendBody": true,
           "specifyBody": "json",
-          "jsonBody": "={\n  \"resourceMetrics\": [{\n    \"resource\": {\n      \"attributes\": [\n        { \"key\": \"service.name\", \"value\": { \"stringValue\": \"aquaponics-manual\" } }\n      ]\n    },\n    \"scopeMetrics\": [{\n      \"scope\": { \"name\": \"n8n-weekly-readings\" },\n      \"metrics\": [{\n        \"name\": \"aquaponics.nitrate_ppm\",\n        \"unit\": \"ppm\",\n        \"gauge\": {\n          \"dataPoints\": [{\n            \"timeUnixNano\": \"1718400000000000000\",\n            \"asDouble\": {{ $json.body.value }},\n            \"attributes\": [\n              { \"key\": \"tank\", \"value\": { \"stringValue\": \"main\" } }\n            ]\n          }]\n        }\n      }]\n    }]\n  }]\n}",
+          "jsonBody": "={\n  \"resourceMetrics\": [{\n    \"resource\": {\n      \"attributes\": [\n        { \"key\": \"service.name\", \"value\": { \"stringValue\": \"aquaponics-manual\" } }\n      ]\n    },\n    \"scopeMetrics\": [{\n      \"scope\": { \"name\": \"n8n-weekly-readings\" },\n      \"metrics\": [{\n        \"name\": \"aquaponics.nitrite_ppm\",\n        \"unit\": \"ppm\",\n        \"gauge\": {\n          \"dataPoints\": [{\n            \"timeUnixNano\": \"1718400000000000000\",\n            \"asDouble\": {{ $json.body.value }},\n            \"attributes\": [\n              { \"key\": \"tank\", \"value\": { \"stringValue\": \"main\" } }\n            ]\n          }]\n        }\n      }]\n    }]\n  }]\n}",
           "options": {}
         },
         "type": "n8n-nodes-base.httpRequest",
@@ -421,11 +421,11 @@
       }
     },
     "authors": "Brian Hirst",
-    "name": "Version d1e94452",
+    "name": "Version 1f34224e",
     "description": "",
     "autosaved": true
   },
-  "activeVersionId": "d1e94452-f356-4350-8dc1-fcdac4fd3704",
+  "activeVersionId": "1f34224e-4a44-4261-9c06-e7bc4870f716",
   "connections": {
     "Webhook": {
       "main": [
@@ -774,7 +774,7 @@
         "url": "http://signoz.hjedi.net:4318/v1/metrics",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"resourceMetrics\": [{\n    \"resource\": {\n      \"attributes\": [\n        { \"key\": \"service.name\", \"value\": { \"stringValue\": \"aquaponics-manual\" } }\n      ]\n    },\n    \"scopeMetrics\": [{\n      \"scope\": { \"name\": \"n8n-weekly-readings\" },\n      \"metrics\": [{\n        \"name\": \"aquaponics.nitrate_ppm\",\n        \"unit\": \"ppm\",\n        \"gauge\": {\n          \"dataPoints\": [{\n            \"timeUnixNano\": \"1718400000000000000\",\n            \"asDouble\": {{ $json.body.value }},\n            \"attributes\": [\n              { \"key\": \"tank\", \"value\": { \"stringValue\": \"main\" } }\n            ]\n          }]\n        }\n      }]\n    }]\n  }]\n}",
+        "jsonBody": "={\n  \"resourceMetrics\": [{\n    \"resource\": {\n      \"attributes\": [\n        { \"key\": \"service.name\", \"value\": { \"stringValue\": \"aquaponics-manual\" } }\n      ]\n    },\n    \"scopeMetrics\": [{\n      \"scope\": { \"name\": \"n8n-weekly-readings\" },\n      \"metrics\": [{\n        \"name\": \"aquaponics.nitrite_ppm\",\n        \"unit\": \"ppm\",\n        \"gauge\": {\n          \"dataPoints\": [{\n            \"timeUnixNano\": \"1718400000000000000\",\n            \"asDouble\": {{ $json.body.value }},\n            \"attributes\": [\n              { \"key\": \"tank\", \"value\": { \"stringValue\": \"main\" } }\n            ]\n          }]\n        }\n      }]\n    }]\n  }]\n}",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -869,6 +869,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-06-16T06:36:09.153Z",
-  "versionId": "d1e94452-f356-4350-8dc1-fcdac4fd3704"
+  "updatedAt": "2026-06-17T04:52:35.426Z",
+  "versionId": "1f34224e-4a44-4261-9c06-e7bc4870f716"
 }
