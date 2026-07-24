@@ -203,8 +203,8 @@
       "name": "Execute a command",
       "credentials": {
         "sshPrivateKey": {
-          "id": "zMpYEN80B0t1Q58t",
-          "name": "SSH Osgiliath"
+          "id": "jrAqTHkGAL2P13Kq",
+          "name": "Osgiliath"
         }
       }
     },
@@ -303,9 +303,13 @@
       "projectId": "Qi7hejIuuHn0WOEG"
     }
   ],
-  "staticData": null,
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-02-06T03:58:09.566Z",
-  "versionId": "f3944c7a-d146-42b6-8ff9-def3795f7cd8"
+  "updatedAt": "2026-07-23T17:35:26.191Z",
+  "versionId": "7181af6e-ed6b-4614-8ce8-a15c54bf8482"
 }
