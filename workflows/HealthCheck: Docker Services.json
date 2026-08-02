@@ -556,11 +556,6 @@
       "main": [
         [
           {
-            "node": "Piwingo Fields",
-            "type": "main",
-            "index": 0
-          },
-          {
             "node": "MySQL Fields",
             "type": "main",
             "index": 0
@@ -577,16 +572,6 @@
           },
           {
             "node": "Redis Fields",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Registry Data",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "RegistryUI Data",
             "type": "main",
             "index": 0
           }
@@ -1138,6 +1123,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2026-06-22T14:48:07.105Z",
-  "versionId": "82f2e30d-2d19-4b36-8763-a3dd27774c38"
+  "updatedAt": "2026-08-01T20:10:54.690Z",
+  "versionId": "50fe34fa-7efa-4914-99c9-fb1e6e152059"
 }
