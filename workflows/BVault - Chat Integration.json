@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-02-06T14:57:45.000Z",
-    "createdAt": "2026-02-06T14:57:32.704Z",
-    "versionId": "c154cd78-0f1f-4410-8bad-08f8af89dbe6",
+    "updatedAt": "2026-08-02T03:23:06.000Z",
+    "createdAt": "2026-08-02T03:23:00.796Z",
+    "versionId": "efd35707-62a2-448f-8ee6-a66eed87295d",
     "workflowId": "J_PBKwfrkFmoZUzbivBzh",
     "nodes": [
       {
@@ -60,8 +60,8 @@
         "name": "Send to Claude",
         "credentials": {
           "sshPrivateKey": {
-            "id": "zMpYEN80B0t1Q58t",
-            "name": "SSH Osgiliath"
+            "id": "jrAqTHkGAL2P13Kq",
+            "name": "Osgiliath"
           }
         }
       },
@@ -124,11 +124,11 @@
       }
     },
     "authors": "Brian Hirst",
-    "name": "Version c154cd78",
+    "name": "Version efd35707",
     "description": "",
     "autosaved": false
   },
-  "activeVersionId": "c154cd78-0f1f-4410-8bad-08f8af89dbe6",
+  "activeVersionId": "efd35707-62a2-448f-8ee6-a66eed87295d",
   "connections": {
     "Telegram Trigger": {
       "main": [
@@ -226,8 +226,8 @@
       "name": "Send to Claude",
       "credentials": {
         "sshPrivateKey": {
-          "id": "zMpYEN80B0t1Q58t",
-          "name": "SSH Osgiliath"
+          "id": "jrAqTHkGAL2P13Kq",
+          "name": "Osgiliath"
         }
       }
     },
@@ -276,6 +276,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-02-06T14:57:32.701Z",
-  "versionId": "c154cd78-0f1f-4410-8bad-08f8af89dbe6"
+  "updatedAt": "2026-08-02T03:23:01.019Z",
+  "versionId": "efd35707-62a2-448f-8ee6-a66eed87295d"
 }
