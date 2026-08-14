@@ -1,0 +1,764 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-08-13T15:20:16.000Z",
+    "createdAt": "2026-08-13T15:20:04.897Z",
+    "versionId": "3082c2d7-67e5-4ac0-8717-671a00d53abe",
+    "workflowId": "1PAthCm1p7wsKqgd",
+    "nodes": [
+      {
+        "parameters": {
+          "formTitle": "Jar Name",
+          "formDescription": "Enter the data you have available:",
+          "formFields": {
+            "values": [
+              {
+                "fieldLabel": "Jar Name",
+                "fieldType": "dropdown",
+                "defaultValue": "prospector",
+                "fieldOptions": {
+                  "values": [
+                    {
+                      "option": "prospector"
+                    },
+                    {
+                      "option": "miner"
+                    }
+                  ]
+                }
+              },
+              {
+                "fieldLabel": "Jar Temp",
+                "fieldType": "number",
+                "requiredField": true
+              },
+              {
+                "fieldLabel": "Starter Grams",
+                "fieldType": "number"
+              },
+              {
+                "fieldLabel": "Flour Grams",
+                "fieldType": "number"
+              },
+              {
+                "fieldLabel": "Water Grams",
+                "fieldType": "number"
+              },
+              {
+                "fieldLabel": "Flour Type",
+                "fieldType": "dropdown",
+                "defaultValue": "bread_flour",
+                "fieldOptions": {
+                  "values": [
+                    {
+                      "option": "bread_flour"
+                    },
+                    {
+                      "option": "spelt"
+                    },
+                    {
+                      "option": "blend"
+                    }
+                  ]
+                }
+              },
+              {
+                "fieldLabel": "Smell",
+                "fieldType": "dropdown",
+                "fieldOptions": {
+                  "values": [
+                    {
+                      "option": "mild"
+                    },
+                    {
+                      "option": "pleasant_sour"
+                    },
+                    {
+                      "option": "sharp"
+                    },
+                    {
+                      "option": "off"
+                    }
+                  ]
+                }
+              },
+              {
+                "fieldLabel": "Float Test",
+                "fieldType": "dropdown",
+                "fieldOptions": {
+                  "values": [
+                    {
+                      "option": "sinks"
+                    },
+                    {
+                      "option": "floats"
+                    },
+                    {
+                      "option": "spreads"
+                    }
+                  ]
+                }
+              },
+              {
+                "fieldLabel": "hooch_present",
+                "fieldType": "dropdown",
+                "fieldOptions": {
+                  "values": [
+                    {
+                      "option": "true"
+                    },
+                    {
+                      "option": "false"
+                    }
+                  ]
+                }
+              },
+              {
+                "fieldLabel": "rise_pct",
+                "fieldType": "number",
+                "defaultValue": "0"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.formTrigger",
+        "typeVersion": 2.5,
+        "position": [
+          -576,
+          0
+        ],
+        "id": "a0e1ac40-b824-4230-ae99-fe8cc5bb49dc",
+        "name": "On form submission",
+        "webhookId": "27bee713-79ff-486c-a647-2bb59e91264e"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://n8n.srv1334932.hstgr.cloud/webhook/c6558de7-aeb6-45a7-8aeb-6aeffedbfefa",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"metric\": \"ph\",\n  \"value\":  {{ $json[\"PH Level\"] }},\n  \"source\": \"form\"\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.4,
+        "position": [
+          -32,
+          0
+        ],
+        "id": "5049623f-7a49-4173-b145-8f38cb45e371",
+        "name": "Send PH Check"
+      },
+      {
+        "parameters": {
+          "schema": {
+            "__rl": true,
+            "value": "public",
+            "mode": "list",
+            "cachedResultName": "public"
+          },
+          "table": {
+            "__rl": true,
+            "value": "sourdough_log",
+            "mode": "list",
+            "cachedResultName": "sourdough_log"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "feeding": "={{ $json[\"Starter Grams\"] !== null && $json[\"Starter Grams\"] !== \"\" ? true : false }}",
+              "hooch_present": "={{ $json.hooch_present }}",
+              "jar_id": "={{ $json[\"Jar Name\"] }}",
+              "float_test": "={{ $json[\"Float Test\"] }}",
+              "smell": "={{ $json.Smell }}",
+              "flour_type": "={{ $json[\"Flour Type\"] }}",
+              "starter_g": "={{ $json[\"Starter Grams\"] }}",
+              "flour_g": "={{ $json[\"Flour Grams\"] }}",
+              "water_g": "={{ $json[\"Water Grams\"] }}",
+              "ambient_temp_f": "={{ $json[\"Jar Temp\"] }}",
+              "rise_pct": "={{ $json.rise_pct }}",
+              "timestamp": "={{ $now.toISO() }}",
+              "id": 0,
+              "humidity_pct": 0,
+              "peak_hours": 0
+            },
+            "matchingColumns": [
+              "id"
+            ],
+            "schema": [
+              {
+                "id": "id",
+                "displayName": "id",
+                "required": false,
+                "defaultMatch": true,
+                "display": true,
+                "type": "number",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "timestamp",
+                "displayName": "timestamp",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "dateTime",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "jar_id",
+                "displayName": "jar_id",
+                "required": true,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "feeding",
+                "displayName": "feeding",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "boolean",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "starter_g",
+                "displayName": "starter_g",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "number",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "flour_g",
+                "displayName": "flour_g",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "number",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "water_g",
+                "displayName": "water_g",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "number",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "flour_type",
+                "displayName": "flour_type",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "ambient_temp_f",
+                "displayName": "ambient_temp_f",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "number",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "humidity_pct",
+                "displayName": "humidity_pct",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "number",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "rise_pct",
+                "displayName": "rise_pct",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "number",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "peak_hours",
+                "displayName": "peak_hours",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "number",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "smell",
+                "displayName": "smell",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "hooch_present",
+                "displayName": "hooch_present",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "boolean",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "float_test",
+                "displayName": "float_test",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "notes",
+                "displayName": "notes",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.postgres",
+        "typeVersion": 2.6,
+        "position": [
+          -336,
+          0
+        ],
+        "id": "f0a79752-ba48-47b6-b43b-4d85d8f9b1cf",
+        "name": "Insert rows in a table",
+        "credentials": {
+          "postgres": {
+            "id": "2SMxwoG8osFIUKUk",
+            "name": "psql - aqualab"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "On form submission": {
+        "main": [
+          [
+            {
+              "node": "Insert rows in a table",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Brian Hirst",
+    "name": "Version 3082c2d7",
+    "description": "",
+    "autosaved": true
+  },
+  "activeVersionId": "3082c2d7-67e5-4ac0-8717-671a00d53abe",
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Insert rows in a table",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-08-13T14:53:37.576Z",
+  "id": "1PAthCm1p7wsKqgd",
+  "isArchived": false,
+  "meta": null,
+  "name": "Sourdough_Entry",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Jar Name",
+        "formDescription": "Enter the data you have available:",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Jar Name",
+              "fieldType": "dropdown",
+              "defaultValue": "prospector",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "prospector"
+                  },
+                  {
+                    "option": "miner"
+                  }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "Jar Temp",
+              "fieldType": "number",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Starter Grams",
+              "fieldType": "number"
+            },
+            {
+              "fieldLabel": "Flour Grams",
+              "fieldType": "number"
+            },
+            {
+              "fieldLabel": "Water Grams",
+              "fieldType": "number"
+            },
+            {
+              "fieldLabel": "Flour Type",
+              "fieldType": "dropdown",
+              "defaultValue": "bread_flour",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "bread_flour"
+                  },
+                  {
+                    "option": "spelt"
+                  },
+                  {
+                    "option": "blend"
+                  }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "Smell",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "mild"
+                  },
+                  {
+                    "option": "pleasant_sour"
+                  },
+                  {
+                    "option": "sharp"
+                  },
+                  {
+                    "option": "off"
+                  }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "Float Test",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "sinks"
+                  },
+                  {
+                    "option": "floats"
+                  },
+                  {
+                    "option": "spreads"
+                  }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "hooch_present",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "true"
+                  },
+                  {
+                    "option": "false"
+                  }
+                ]
+              }
+            },
+            {
+              "fieldLabel": "rise_pct",
+              "fieldType": "number",
+              "defaultValue": "0"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.5,
+      "position": [
+        -576,
+        0
+      ],
+      "id": "a0e1ac40-b824-4230-ae99-fe8cc5bb49dc",
+      "name": "On form submission",
+      "webhookId": "27bee713-79ff-486c-a647-2bb59e91264e"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://n8n.srv1334932.hstgr.cloud/webhook/c6558de7-aeb6-45a7-8aeb-6aeffedbfefa",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"metric\": \"ph\",\n  \"value\":  {{ $json[\"PH Level\"] }},\n  \"source\": \"form\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -32,
+        0
+      ],
+      "id": "5049623f-7a49-4173-b145-8f38cb45e371",
+      "name": "Send PH Check"
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "value": "public",
+          "mode": "list",
+          "cachedResultName": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "sourdough_log",
+          "mode": "list",
+          "cachedResultName": "sourdough_log"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "feeding": "={{ $json[\"Starter Grams\"] !== null && $json[\"Starter Grams\"] !== \"\" ? true : false }}",
+            "hooch_present": "={{ $json.hooch_present }}",
+            "jar_id": "={{ $json[\"Jar Name\"] }}",
+            "float_test": "={{ $json[\"Float Test\"] }}",
+            "smell": "={{ $json.Smell }}",
+            "flour_type": "={{ $json[\"Flour Type\"] }}",
+            "starter_g": "={{ $json[\"Starter Grams\"] }}",
+            "flour_g": "={{ $json[\"Flour Grams\"] }}",
+            "water_g": "={{ $json[\"Water Grams\"] }}",
+            "ambient_temp_f": "={{ $json[\"Jar Temp\"] }}",
+            "rise_pct": "={{ $json.rise_pct }}",
+            "timestamp": "={{ $now.toISO() }}",
+            "id": 0,
+            "humidity_pct": 0,
+            "peak_hours": 0
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "timestamp",
+              "displayName": "timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "jar_id",
+              "displayName": "jar_id",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "feeding",
+              "displayName": "feeding",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "starter_g",
+              "displayName": "starter_g",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "flour_g",
+              "displayName": "flour_g",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "water_g",
+              "displayName": "water_g",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "flour_type",
+              "displayName": "flour_type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ambient_temp_f",
+              "displayName": "ambient_temp_f",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "humidity_pct",
+              "displayName": "humidity_pct",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "rise_pct",
+              "displayName": "rise_pct",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "peak_hours",
+              "displayName": "peak_hours",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "smell",
+              "displayName": "smell",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "hooch_present",
+              "displayName": "hooch_present",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "float_test",
+              "displayName": "float_test",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "notes",
+              "displayName": "notes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -336,
+        0
+      ],
+      "id": "f0a79752-ba48-47b6-b43b-4d85d8f9b1cf",
+      "name": "Insert rows in a table",
+      "credentials": {
+        "postgres": {
+          "id": "2SMxwoG8osFIUKUk",
+          "name": "psql - aqualab"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed",
+    "errorWorkflow": "l6cTBPD1mo-Amcj4rShqQ",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-08-13T14:53:37.584Z",
+      "createdAt": "2026-08-13T14:53:37.584Z",
+      "role": "workflow:owner",
+      "workflowId": "1PAthCm1p7wsKqgd",
+      "projectId": "Qi7hejIuuHn0WOEG"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-08-13T15:20:08.832Z",
+  "versionId": "3082c2d7-67e5-4ac0-8717-671a00d53abe"
+}
