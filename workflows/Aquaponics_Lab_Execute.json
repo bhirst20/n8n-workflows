@@ -551,7 +551,8 @@
           "value": {
             "value": "={{ $json.body.value }}",
             "metric": "={{ $json.body.metric }}",
-            "source": "={{ $json.body.source }}"
+            "source": "={{ $json.body.source }}",
+            "tank": "={{ $json.body.tank }}"
           },
           "matchingColumns": [
             "id"
@@ -869,6 +870,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-06-17T04:52:35.426Z",
-  "versionId": "1f34224e-4a44-4261-9c06-e7bc4870f716"
+  "updatedAt": "2026-08-19T00:18:10.268Z",
+  "versionId": "7b02db76-a57d-404e-9a3f-4dfe7c2e53f7"
 }
