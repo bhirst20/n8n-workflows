@@ -1,9 +1,9 @@
 {
   "active": true,
   "activeVersion": {
-    "updatedAt": "2026-06-16T06:37:16.000Z",
-    "createdAt": "2026-06-16T06:37:13.608Z",
-    "versionId": "645ae82f-7528-4b7d-9586-91f5d2c960a5",
+    "updatedAt": "2026-08-19T00:18:28.000Z",
+    "createdAt": "2026-08-19T00:18:23.789Z",
+    "versionId": "8f460c9b-afbe-4ec7-a02e-74b9af5993c7",
     "workflowId": "f3hDcbZkt8ES0djv",
     "nodes": [
       {
@@ -31,6 +31,20 @@
                 "fieldLabel": "Nitrate",
                 "fieldType": "number",
                 "defaultValue": "-1"
+              },
+              {
+                "fieldLabel": "tank",
+                "fieldType": "dropdown",
+                "fieldOptions": {
+                  "values": [
+                    {
+                      "option": "tank1"
+                    },
+                    {
+                      "option": "qt"
+                    }
+                  ]
+                }
               }
             ]
           },
@@ -329,11 +343,11 @@
       }
     },
     "authors": "Brian Hirst",
-    "name": "Version 645ae82f",
+    "name": "Version 8f460c9b",
     "description": "",
     "autosaved": true
   },
-  "activeVersionId": "645ae82f-7528-4b7d-9586-91f5d2c960a5",
+  "activeVersionId": "8f460c9b-afbe-4ec7-a02e-74b9af5993c7",
   "connections": {
     "On form submission": {
       "main": [
@@ -442,6 +456,20 @@
               "fieldLabel": "Nitrate",
               "fieldType": "number",
               "defaultValue": "-1"
+            },
+            {
+              "fieldLabel": "tank",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "tank1"
+                  },
+                  {
+                    "option": "qt"
+                  }
+                ]
+              }
             }
           ]
         },
@@ -683,6 +711,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-06-16T06:37:13.606Z",
-  "versionId": "645ae82f-7528-4b7d-9586-91f5d2c960a5"
+  "updatedAt": "2026-08-19T00:18:23.788Z",
+  "versionId": "8f460c9b-afbe-4ec7-a02e-74b9af5993c7"
 }
