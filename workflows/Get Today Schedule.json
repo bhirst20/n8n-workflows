@@ -1,0 +1,232 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get many events1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get many events",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many events1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many events": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        []
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-09-16T05:14:07.067Z",
+  "id": "QVG5Vug8UBP1UD7a",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Get Today Schedule",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "7af13dd1-8aaf-4d6c-90e5-dbe27a808906",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "hirstenator@gmail.com",
+          "mode": "list",
+          "cachedResultName": "Brian's Calendar"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        288,
+        64
+      ],
+      "id": "7c4529fd-4d44-40a8-bc5a-3065265993c2",
+      "name": "Get many events",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "iloYDzR3VFWiBp2q",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "event",
+        "includeRecurringInstances": true,
+        "startDateTime": "2026-09-16T00:00:00",
+        "endDateTime": "2026-09-16T23:59:59"
+      },
+      "type": "n8n-nodes-base.microsoftOutlook",
+      "typeVersion": 2,
+      "position": [
+        288,
+        -96
+      ],
+      "id": "ff57513b-8656-4f43-8874-6d489d235513",
+      "name": "Get many events1",
+      "webhookId": "a9967f58-939f-4ea6-81e9-70ccd06174df",
+      "credentials": {
+        "microsoftOutlookOAuth2Api": {
+          "id": "vl9KoFB8DLWN7yyt",
+          "name": "Microsoft Outlook account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        752,
+        -160
+      ],
+      "id": "c5861868-7bb5-42f1-9388-08dc6a098822",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        752,
+        48
+      ],
+      "id": "a3d694b9-eafb-4c03-9e33-62cb30e1373b",
+      "name": "Ollama Chat Model",
+      "credentials": {
+        "ollamaApi": {
+          "id": "H7u3ojeWxXCRjvQo",
+          "name": "Freelands Ollama"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://ntfy.sh/svjgQ5oxGZJoizCu",
+        "sendBody": true,
+        "contentType": "raw",
+        "body": "This is a test",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1088,
+        -160
+      ],
+      "id": "76e97d27-f360-42b4-9040-46835f41f47c",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        544,
+        -160
+      ],
+      "id": "19d38843-257a-49a8-8f43-c6b1dfa04130",
+      "name": "Merge"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-09-16T05:14:07.079Z",
+      "createdAt": "2026-09-16T05:14:07.079Z",
+      "role": "workflow:owner",
+      "workflowId": "QVG5Vug8UBP1UD7a",
+      "projectId": "Qi7hejIuuHn0WOEG"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-09-16T05:46:28.784Z",
+  "versionId": "23ee60eb-fd39-44db-9035-5ee9de2e2cc2"
+}
